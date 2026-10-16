@@ -748,6 +748,14 @@ document.addEventListener('DOMContentLoaded', () => {
       pinBR: '💃'
     }
   ];
+ 
+  // Preload all envelope memory photos into browser cache for zero-lag instant transitions
+  try {
+    ENVELOPE_PAGE_PHOTOS.forEach(p => {
+      if (p.tl) { const i1 = new Image(); i1.src = p.tl; }
+      if (p.br) { const i2 = new Image(); i2.src = p.br; }
+    });
+  } catch (e) {}
 
   function updateFloatingPhotos(pageIdx) {
     const photoData = ENVELOPE_PAGE_PHOTOS[pageIdx] || ENVELOPE_PAGE_PHOTOS[0];
@@ -773,7 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Elegant, smooth crossfade dissolve
+    // Fast, responsive crossfade without lag
     imgTL.classList.add('img-fading');
     imgBR.classList.add('img-fading');
 
@@ -786,14 +794,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (pinTL && photoData.pinTL) pinTL.textContent = photoData.pinTL;
       if (pinBR && photoData.pinBR) pinBR.textContent = photoData.pinBR;
 
-      // Ensure the browser has applied the new image, then softly dissolve in
       requestAnimationFrame(() => {
-        setTimeout(() => {
-          imgTL.classList.remove('img-fading');
-          imgBR.classList.remove('img-fading');
-        }, 30);
+        imgTL.classList.remove('img-fading');
+        imgBR.classList.remove('img-fading');
       });
-    }, 220);
+    }, 110);
   }
 
   // Typewriter Animation that preserves HTML tags (<br>, <span>)

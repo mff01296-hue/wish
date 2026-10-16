@@ -1228,18 +1228,18 @@ body {
   border-radius: 4px;
   display: block;
   opacity: 1;
-  filter: blur(0px);
-  transform: scale(1);
-  transition: opacity 0.38s ease-in-out, filter 0.38s ease-in-out, transform 0.38s ease-in-out;
-  will-change: opacity, filter, transform;
+  transform: scale(1) rotate(0deg);
+  transition: opacity 0.26s cubic-bezier(0.2, 0.8, 0.25, 1), transform 0.26s cubic-bezier(0.2, 0.8, 0.25, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* Elegant Smooth Fade/Dissolve when switching pages */
+/* Silky Fast, Hardware-Accelerated Photo Transition */
 .floating-photo-img.img-fading {
-  opacity: 0;
-  filter: blur(5px);
-  transform: scale(0.96);
-  transition: opacity 0.22s ease-in, filter 0.22s ease-in, transform 0.22s ease-in;
+  opacity: 0.1;
+  transform: scale(0.93) rotate(-1.5deg);
+  transition: opacity 0.12s ease-out, transform 0.12s ease-out;
 }
 
 /* Cute Pastel Washi Tape Strip */
@@ -4199,15 +4199,15 @@ body {
 
   .badge-next-btn {
     position: fixed !important;
-    bottom: max(20px, env(safe-area-inset-bottom, 20px)) !important;
-    right: 20px !important;
-    padding: 7px 24px !important;
-    z-index: 99 !important;
-    box-shadow: 0 8px 22px rgba(123, 24, 43, 0.4) !important;
+    bottom: max(48px, calc(env(safe-area-inset-bottom, 20px) + 32px)) !important;
+    right: 22px !important;
+    padding: 9px 28px !important;
+    z-index: 999 !important;
+    box-shadow: 0 10px 26px rgba(123, 24, 43, 0.45) !important;
   }
 
   .badge-next-text {
-    font-size: 1.7rem;
+    font-size: 1.75rem;
   }
 
   /* Screen 4: Envelope, Multi-Page Letter, Memory Photos & Heart Locket */
@@ -4391,13 +4391,14 @@ body {
     margin-top: 10px;
   }
 
-  .camera-btn {
+  .camera-btn,
+  .gift-btn {
     position: fixed !important;
-    bottom: max(20px, env(safe-area-inset-bottom, 20px)) !important;
+    bottom: max(48px, calc(env(safe-area-inset-bottom, 20px) + 32px)) !important;
     right: 20px !important;
-    padding: 7px 18px !important;
-    z-index: 99 !important;
-    box-shadow: 0 6px 20px rgba(123, 24, 43, 0.35) !important;
+    padding: 8px 20px !important;
+    z-index: 999 !important;
+    box-shadow: 0 8px 24px rgba(123, 24, 43, 0.45) !important;
   }
 
   /* Screen 6: Romantic Clothesline & Hanging Polaroids */
@@ -4503,9 +4504,10 @@ body {
   }
 
   /* Screen 7: Mystery Gift Boxes */
+  #screenSurprise .screen-content,
   #screenGift .screen-content {
     justify-content: space-evenly;
-    padding: 60px 14px 24px 14px;
+    padding: 60px 14px 28px 14px;
   }
 
   .surprise-title {
@@ -4582,9 +4584,16 @@ body {
     margin-top: 5px;
   }
 
+  .surprise-action-footer {
+    margin-top: 14px;
+    margin-bottom: max(32px, calc(env(safe-area-inset-bottom, 16px) + 20px));
+    z-index: 20;
+    position: relative;
+  }
+
   .cat-clap-container {
     position: fixed !important;
-    bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+    bottom: max(36px, calc(env(safe-area-inset-bottom, 16px) + 22px)) !important;
     right: 16px !important;
     z-index: 50;
   }
@@ -4595,7 +4604,7 @@ body {
 
   .btn-gift-nav {
     min-width: 125px;
-    padding: 10px 20px;
+    padding: 11px 22px;
     font-size: 1.05rem;
   }
 
