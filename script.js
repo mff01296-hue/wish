@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------------------------------------------------
   // SCREEN 0: CUPID BOW & ARROW HEART INTRO INTERACTION
-  // Accurately recreating @code_wars_official reel
+  // Interactive Aiming Direction & Shooting Heart
   // ---------------------------------------------------
   const screenCupid = document.getElementById('screenCupid');
   const cupidBowArena = document.getElementById('cupidBowArena');
@@ -368,54 +368,132 @@ document.addEventListener('DOMContentLoaded', () => {
   const cupidStruckArrow = document.getElementById('cupidStruckArrow');
   const cupidBloomFlash = document.getElementById('cupidBloomFlash');
   const cupidPullHint = document.getElementById('cupidPullHint');
+  const cupidAimGuide = document.getElementById('cupidAimGuide');
+  const aimDottedLine = document.getElementById('aimDottedLine');
+  const aimTargetReticle = document.getElementById('aimTargetReticle');
+  const heartLockBadge = document.getElementById('heartLockBadge');
 
-  let isPullingBow = false;
-  let pullStartX = 0;
-  let pullStartY = 0;
-  let currentPullDist = 0;
+  let isAimingBow = false;
+  let currentBowAngle = -38;
+  let isTargetLocked = false;
   let isArrowShot = false;
 
-  function updateBowPull(dx, dy) {
-    // Project delta along pull direction (pulling down-left gives positive tension)
-    const pullDistance = Math.min(Math.max(-dx - dy * 0.7, 0), 45);
-    currentPullDist = pullDistance;
+  function calculateAngleToHeart() {
+    if (!cupidBowArena || !cupidHeartTarget) return -38;
+    const bRect = cupidBowArena.getBoundingClientRect();
+    const hRect = cupidHeartTarget.getBoundingClientRect();
+    const bowCenterX = bRect.left + 35; // notch pivot
+    const bowCenterY = bRect.top + 80;
+    const heartCenterX = hRect.left + hRect.width * 0.5;
+    const heartCenterY = hRect.top + hRect.height * 0.5;
+    return Math.atan2(heartCenterY - bowCenterY, heartCenterX - bowCenterX) * 180 / Math.PI;
+  }
 
-    const pullX = 32 - pullDistance * 0.9;
-    const pullY = 80;
+  function updateBowAim(clientX, clientY) {
+    if (!cupidBowArena || !cupidHeartTarget) return;
+
+    const bRect = cupidBowArena.getBoundingClientRect();
+    const stage = document.getElementById('cupidStage') || document.body;
+    const stageRect = stage.getBoundingClientRect();
+
+    const pivotX = bRect.left + 35;
+    const pivotY = bRect.top + 80;
+
+    const dx = clientX - pivotX;
+    const dy = clientY - pivotY;
+
+    // Check if dragging away from the heart (slingshot pull back) or towards screen (aiming)
+    let aimAngle = -38;
+    let pullDistance = 30;
+
+    if (dx < 0 && dy > -20) {
+      // Slingshot pull backwards
+      aimAngle = Math.atan2(-dy, -dx) * 180 / Math.PI;
+      pullDistance = Math.min(Math.hypot(dx, dy) * 0.65, 48);
+    } else {
+      // Direct pointing towards cursor
+      aimAngle = Math.atan2(dy, dx) * 180 / Math.PI;
+      pullDistance = Math.min(Math.max(Math.hypot(dx, dy) * 0.25, 20), 45);
+    }
+
+    currentBowAngle = aimAngle;
+    cupidBowArena.style.transform = `rotate(${aimAngle}deg)`;
+
+    // Draw string and arrow back with tension
     if (bowString) {
-      bowString.setAttribute('d', `M 32,22 Q ${pullX},${pullY} 32,138`);
+      const pullX = 32 - pullDistance * 0.85;
+      bowString.setAttribute('d', `M 32,22 Q ${pullX},80 32,138`);
     }
     if (bowArrowGroup) {
       bowArrowGroup.style.transform = `translateX(${-pullDistance}px)`;
     }
-    if (cupidPullHint && pullDistance > 10) {
-      cupidPullHint.textContent = 'RELEASE TO SHOOT! 🏹💖';
-      cupidPullHint.style.color = '#c41e45';
+
+    // Compare with target heart angle
+    const heartAngle = calculateAngleToHeart();
+    let angleDiff = Math.abs(aimAngle - heartAngle);
+    if (angleDiff > 180) angleDiff = 360 - angleDiff;
+
+    isTargetLocked = (angleDiff < 25);
+
+    if (isTargetLocked) {
+      cupidHeartTarget.classList.add('target-locked');
+      if (cupidPullHint) {
+        cupidPullHint.textContent = '🎯 TARGET LOCKED! RELEASE TO SHOOT! 🏹💖';
+        cupidPullHint.style.color = '#c41e45';
+      }
+    } else {
+      cupidHeartTarget.classList.remove('target-locked');
+      if (cupidPullHint) {
+        cupidPullHint.textContent = 'AIM ARROW AT THE HEART 🎯🏹';
+        cupidPullHint.style.color = '#875462';
+      }
+    }
+
+    // Update aim trajectory guide line
+    if (cupidAimGuide) {
+      cupidAimGuide.classList.add('is-aiming');
+      const startX = pivotX - stageRect.left;
+      const startY = pivotY - stageRect.top;
+      cupidAimGuide.style.left = `${startX}px`;
+      cupidAimGuide.style.top = `${startY}px`;
+      cupidAimGuide.style.transform = `rotate(${aimAngle}deg)`;
+
+      if (aimDottedLine) {
+        const dist = Math.min(Math.max(Math.hypot(dx, dy), 160), 320);
+        aimDottedLine.style.width = `${dist}px`;
+      }
     }
   }
 
-  function resetBowString() {
+  function resetBowAim() {
     if (bowString) {
       bowString.setAttribute('d', 'M 32,22 Q 32,80 32,138');
     }
     if (bowArrowGroup) {
       bowArrowGroup.style.transform = '';
     }
+    if (cupidAimGuide) {
+      cupidAimGuide.classList.remove('is-aiming');
+    }
+    if (cupidHeartTarget) {
+      cupidHeartTarget.classList.remove('target-locked');
+    }
     if (cupidPullHint) {
-      cupidPullHint.textContent = 'PULL & RELEASE';
+      cupidPullHint.textContent = 'AIM ARROW & SHOOT THE HEART 🏹💖';
       cupidPullHint.style.color = '';
     }
   }
 
-  function shootArrowAtHeart() {
+  function shootArrowAtHeart(targetAngleOverride) {
     if (isArrowShot) return;
     isArrowShot = true;
 
     initAudioCtx();
     playWhooshSfx();
-    resetBowString();
 
+    if (cupidAimGuide) cupidAimGuide.classList.remove('is-aiming');
     if (bowArrowGroup) bowArrowGroup.style.opacity = '0';
+    resetBowAim();
 
     if (!cupidBowArena || !cupidHeartTarget) {
       goToScreen('screen1');
@@ -427,23 +505,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const stage = document.getElementById('cupidStage') || document.body;
     const stageRect = stage.getBoundingClientRect();
 
-    const startX = bowRect.left + bowRect.width * 0.5 - stageRect.left;
-    const startY = bowRect.top + bowRect.height * 0.5 - stageRect.top;
+    const startX = bowRect.left + 35 - stageRect.left;
+    const startY = bowRect.top + 80 - stageRect.top;
     const targetX = heartRect.left + heartRect.width * 0.5 - stageRect.left;
     const targetY = heartRect.top + heartRect.height * 0.5 - stageRect.top;
 
-    const angleDeg = Math.atan2(targetY - startY, targetX - startX) * 180 / Math.PI;
+    const heartAngle = Math.atan2(targetY - startY, targetX - startX) * 180 / Math.PI;
+    const shotAngle = (typeof targetAngleOverride === 'number') ? targetAngleOverride : heartAngle;
+
+    // Smoothly turn bow toward final release
+    cupidBowArena.style.transform = `rotate(${heartAngle}deg)`;
 
     if (flyingArrowProjectile) {
       flyingArrowProjectile.style.left = `${startX}px`;
       flyingArrowProjectile.style.top = `${startY}px`;
-      flyingArrowProjectile.style.transform = `translate(0, 0) rotate(${angleDeg}deg) scale(0.9)`;
+      flyingArrowProjectile.style.transform = `translate(0, 0) rotate(${shotAngle}deg) scale(0.9)`;
       flyingArrowProjectile.classList.add('is-flying');
       flyingArrowProjectile.style.opacity = '1';
-      flyingArrowProjectile.style.transition = 'transform 0.38s cubic-bezier(0.2, 0.85, 0.35, 1.15), opacity 0.1s ease';
+      flyingArrowProjectile.style.transition = 'transform 0.42s cubic-bezier(0.18, 0.89, 0.32, 1.25), opacity 0.1s ease';
 
       requestAnimationFrame(() => {
-        flyingArrowProjectile.style.transform = `translate(${targetX - startX}px, ${targetY - startY}px) rotate(${angleDeg}deg) scale(1)`;
+        flyingArrowProjectile.style.transform = `translate(${targetX - startX}px, ${targetY - startY}px) rotate(${heartAngle}deg) scale(1)`;
       });
     }
 
@@ -488,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }, 900);
         }, 1450);
       }, 200);
-    }, 380);
+    }, 420);
   }
 
   function spawnCupidSparkles(rect) {
@@ -512,51 +594,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Pointer / Touch drag events for bow
+  // Pointer & Touch events to aim bow in any direction and shoot
   if (cupidBowArena) {
     cupidBowArena.addEventListener('pointerdown', (e) => {
       if (isArrowShot) return;
-      isPullingBow = true;
-      pullStartX = e.clientX;
-      pullStartY = e.clientY;
-      cupidBowArena.classList.add('is-pulling');
+      isAimingBow = true;
+      cupidBowArena.classList.add('is-aiming');
       try {
         cupidBowArena.setPointerCapture(e.pointerId);
       } catch (err) {}
+      updateBowAim(e.clientX, e.clientY);
     });
 
     cupidBowArena.addEventListener('pointermove', (e) => {
-      if (!isPullingBow) return;
-      const dx = e.clientX - pullStartX;
-      const dy = e.clientY - pullStartY;
-      updateBowPull(dx, dy);
+      if (!isAimingBow) return;
+      updateBowAim(e.clientX, e.clientY);
     });
 
-    const finishPull = (e) => {
-      if (!isPullingBow) return;
-      isPullingBow = false;
-      cupidBowArena.classList.remove('is-pulling');
+    const finishAimAndShoot = (e) => {
+      if (!isAimingBow) return;
+      isAimingBow = false;
+      cupidBowArena.classList.remove('is-aiming');
       try {
         cupidBowArena.releasePointerCapture(e.pointerId);
       } catch (err) {}
 
-      // Release shoots arrow (both pull-release and tap work!)
-      shootArrowAtHeart();
+      shootArrowAtHeart(currentBowAngle);
     };
 
-    cupidBowArena.addEventListener('pointerup', finishPull);
-    cupidBowArena.addEventListener('pointercancel', finishPull);
+    cupidBowArena.addEventListener('pointerup', finishAimAndShoot);
+    cupidBowArena.addEventListener('pointercancel', finishAimAndShoot);
   }
 
-  // Also tapping heart or pull hint triggers the bow shot
+  // Tap heart or hint directly to auto-aim and shoot!
   if (cupidHeartTarget) {
     cupidHeartTarget.addEventListener('click', () => {
-      if (!isArrowShot) shootArrowAtHeart();
+      if (!isArrowShot) shootArrowAtHeart(calculateAngleToHeart());
     });
   }
   if (cupidPullHint) {
     cupidPullHint.addEventListener('click', () => {
-      if (!isArrowShot) shootArrowAtHeart();
+      if (!isArrowShot) shootArrowAtHeart(calculateAngleToHeart());
     });
   }
 
@@ -1576,12 +1654,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  let hugHoldTimer = null;
+
   function triggerHugBurst() {
     playPopSfx();
     setTimeout(playCheerSfx, 60);
     setTimeout(playChimeSfx, 150);
 
-    // Refresh animated picture/gif frame so animation restarts cleanly
+    // Refresh animated picture/gif frame so animation plays from frame 0
     if (hugBearsImg) {
       const pic = hugBearsWrapper ? hugBearsWrapper.querySelector('.hug-bears-picture') : null;
       const srcEl = pic ? pic.querySelector('source') : null;
@@ -1589,8 +1669,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (srcEl) {
         srcEl.srcset = `assets/hug_bears_animated.webp?t=${timestamp}`;
       }
-      const baseSrc = hugBearsImg.src.split('?')[0];
-      hugBearsImg.src = `${baseSrc}?t=${timestamp}`;
+      hugBearsImg.src = `assets/hug_bears_animated.gif?t=${timestamp}`;
     }
 
     if (hugBearsWrapper) {
@@ -1599,12 +1678,25 @@ document.addEventListener('DOMContentLoaded', () => {
       hugBearsWrapper.classList.add('is-hugging');
       setTimeout(() => {
         hugBearsWrapper.classList.remove('is-hugging');
-      }, 800);
+      }, 1000);
     }
 
     spawnHugPoppingHearts();
     triggerConfetti(0.8);
     setTimeout(() => triggerConfetti(0.4), 220);
+
+    // Play hug animation exactly 1 time (~1960ms), then hold on the warm cuddling final frame!
+    if (hugHoldTimer) clearTimeout(hugHoldTimer);
+    hugHoldTimer = setTimeout(() => {
+      if (hugBearsImg) {
+        const pic = hugBearsWrapper ? hugBearsWrapper.querySelector('.hug-bears-picture') : null;
+        const srcEl = pic ? pic.querySelector('source') : null;
+        if (srcEl) {
+          srcEl.srcset = 'assets/hug_bears_final_frame.png';
+        }
+        hugBearsImg.src = 'assets/hug_bears_final_frame.png';
+      }
+    }, 1960);
   }
 
   btnHugAgain.addEventListener('click', triggerHugBurst);

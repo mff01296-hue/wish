@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Fredoka:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=Titan+One&family=Patrick+Hand&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261016_mobile_v3_fixed">
+  <link rel="stylesheet" href="style.css?v=20261016_aim_hug_options">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 
@@ -97,6 +97,7 @@
 
         <!-- Glowing 3D Glossy Pink Heart Target -->
         <div class="cupid-heart-target" id="cupidHeartTarget" title="Pull & release the bow or tap to shoot! 🏹💖">
+          <div class="heart-lock-badge" id="heartLockBadge"><span>LOCKED 🎯</span></div>
           <div class="cupid-heart-halo"></div>
           <div class="cupid-heart-mesh" id="cupidHeartMesh">
             <svg class="heart-svg" viewBox="0 0 100 90">
@@ -132,11 +133,17 @@
           <div class="heart-sparkle-burst" id="heartSparkleBurst"></div>
         </div>
 
+        <!-- Trajectory Aiming Laser / Guide -->
+        <div class="cupid-aim-guide" id="cupidAimGuide" aria-hidden="true">
+          <div class="aim-dotted-line" id="aimDottedLine"></div>
+          <div class="aim-target-reticle" id="aimTargetReticle">🎯</div>
+        </div>
+
         <!-- Hint text from video -->
-        <p class="cupid-pull-hint" id="cupidPullHint">PULL &amp; RELEASE</p>
+        <p class="cupid-pull-hint" id="cupidPullHint">AIM ARROW &amp; SHOOT THE HEART 🏹💖</p>
 
         <!-- Interactive Bow and Arrow Arena (at bottom left) -->
-        <div class="cupid-bow-arena" id="cupidBowArena" title="Drag bow back and release to shoot! 🏹✨">
+        <div class="cupid-bow-arena" id="cupidBowArena" title="Drag to aim and release to shoot! 🏹✨">
           <svg class="cupid-bow-svg" id="cupidBowSvg" viewBox="0 0 160 160">
             <!-- Bow Wood Limb -->
             <path class="bow-limb" d="M 32,22 Q 86,80 32,138" fill="none" stroke="#36221c" stroke-width="7"
@@ -987,7 +994,7 @@ Happy Birthday my favorite human! Forever and always. 💗🎂✨</textarea>
     <button class="toast-close" id="toastClose">Got it</button>
   </div>
 
-  <script src="script.js?v=20261016_fullscreen_clean"></script>
+  <script src="script.js?v=20261016_aim_hug_options"></script>
 </body>
 
 </html>

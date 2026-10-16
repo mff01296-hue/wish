@@ -2963,11 +2963,13 @@ body {
 .forever-options-arena {
   position: relative;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 52px;
   width: 100%;
-  min-height: 100px;
+  max-width: 460px;
+  min-height: 90px;
   margin: 0 auto 6px auto;
 }
 
@@ -3505,16 +3507,17 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Arena containing the two buttons */
+/* Arena containing the two buttons side by side with distance */
 .forever-options-arena {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   min-height: 80px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 52px;
   margin: 0 auto;
 }
 
@@ -3753,8 +3756,90 @@ body {
 }
 
 .cupid-bow-arena:active,
-.cupid-bow-arena.is-pulling {
+.cupid-bow-arena.is-pulling,
+.cupid-bow-arena.is-aiming {
   cursor: grabbing;
+  transition: none !important;
+}
+
+/* Trajectory Aiming Laser / Guide */
+.cupid-aim-guide {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 7;
+  transform-origin: 0% 50%;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.cupid-aim-guide.is-aiming {
+  opacity: 1;
+}
+
+.aim-dotted-line {
+  height: 3px;
+  width: 200px;
+  background: repeating-linear-gradient(90deg, #ff3366, #ff3366 10px, transparent 10px, transparent 18px);
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.7);
+  border-radius: 2px;
+  animation: aimLineDash 0.8s linear infinite;
+}
+
+@keyframes aimLineDash {
+  from { background-position: 0 0; }
+  to { background-position: 36px 0; }
+}
+
+.aim-target-reticle {
+  font-size: 1.2rem;
+  margin-left: 6px;
+  filter: drop-shadow(0 2px 6px rgba(255, 51, 102, 0.6));
+  animation: reticlePulse 0.7s infinite alternate ease-in-out;
+}
+
+@keyframes reticlePulse {
+  0% { transform: scale(0.9) rotate(0deg); }
+  100% { transform: scale(1.2) rotate(15deg); }
+}
+
+/* Target Lock on Heart */
+.heart-lock-badge {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: linear-gradient(135deg, #ff245e, #c41e45);
+  color: #ffffff;
+  font-family: var(--font-pill, 'Outfit', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(255, 36, 94, 0.45);
+  opacity: 0;
+  transition: transform 0.22s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.2s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.cupid-heart-target.target-locked .heart-lock-badge {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  animation: lockBadgeBounce 0.6s infinite alternate ease-in-out;
+}
+
+@keyframes lockBadgeBounce {
+  0% { transform: translateX(-50%) scale(1); }
+  100% { transform: translateX(-50%) scale(1.1); box-shadow: 0 6px 16px rgba(255, 36, 94, 0.7); }
+}
+
+.cupid-heart-target.target-locked {
+  transform: translate(-50%, -50%) scale(1.14);
+  filter: drop-shadow(0 0 24px rgba(255, 43, 102, 0.85));
 }
 
 .cupid-bow-svg {
@@ -4550,8 +4635,13 @@ body {
 
   .forever-options-arena {
     min-height: 75px;
-    gap: 18px;
-    max-width: 320px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    width: 100%;
+    max-width: 360px;
   }
 
   .btn-forever-yes {
