@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Tiny Birthday Gift 💗 | For You</title>
+  <meta name="description"
+    content="An interactive birthday gift website with cute cats, letters, polaroids, and virtual hugs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Fredoka:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=Titan+One&family=Patrick+Hand&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261016_laptop_frames">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+  <!-- Ambient Audio Player Bar -->
+  <div class="audio-control" id="audioControl" title="Toggle background music">
+    <div class="disc-wrapper">
+      <div class="music-disc" id="musicDisc">🎵</div>
+    </div>
+    <span class="music-label" id="musicLabel">Play Music 🎶</span>
+    <audio id="bgMusic" loop preload="auto">
+      <source src="assets/music.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+
+  <!-- Sound Toggle / Sfx -->
+  <button class="sound-effects-btn" id="sfxBtn" title="Sound Effects">
+    <span>🔊</span>
+  </button>
+
+  <!-- Global SVG Masks & Definitions -->
+  <svg width="0" height="0" style="position: absolute; pointer-events: none;" aria-hidden="true">
+    <defs>
+      <!-- Perfect Normalized Heart Clip Path for Photos -->
+      <clipPath id="locketHeartClip" clipPathUnits="objectBoundingBox">
+        <path
+          d="M 0.5,0.26 C 0.5,0.12 0.22,0.02 0.08,0.18 C -0.06,0.36 0.15,0.68 0.5,0.96 C 0.85,0.68 1.06,0.36 0.92,0.18 C 0.78,0.02 0.5,0.12 0.5,0.26 Z" />
+      </clipPath>
+
+      <!-- Silver / Platinum Metallic Gradients for Heart Locket Frame -->
+      <linearGradient id="locketSilverBevel" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" />
+        <stop offset="22%" stop-color="#e8e9ee" />
+        <stop offset="48%" stop-color="#bebfc9" />
+        <stop offset="72%" stop-color="#8a8b96" />
+        <stop offset="90%" stop-color="#b6b7c2" />
+        <stop offset="100%" stop-color="#ffffff" />
+      </linearGradient>
+
+      <linearGradient id="locketSilverBevelRight" x1="100%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" />
+        <stop offset="25%" stop-color="#e4e5eb" />
+        <stop offset="50%" stop-color="#9ea0ab" />
+        <stop offset="75%" stop-color="#70727c" />
+        <stop offset="100%" stop-color="#e0e1ea" />
+      </linearGradient>
+
+      <linearGradient id="locketGrooveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#3c3d45" stop-opacity="0.85" />
+        <stop offset="100%" stop-color="#70717d" stop-opacity="0.45" />
+      </linearGradient>
+
+      <linearGradient id="locketHingeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#555660" />
+        <stop offset="35%" stop-color="#ffffff" />
+        <stop offset="70%" stop-color="#a4a5b0" />
+        <stop offset="100%" stop-color="#4e4f58" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Fullscreen Main Container (Laptop / Tablet / Mobile Viewport) -->
+  <main class="gift-viewport" id="giftViewport">
+
+    <!-- Romantic Ambient Floating Hearts & Sparkles -->
+    <div class="ambient-floating-hearts" aria-hidden="true">
+      <span class="amb-heart ah-1">💕</span>
+      <span class="amb-heart ah-2">✨</span>
+      <span class="amb-heart ah-3">💖</span>
+      <span class="amb-heart ah-4">🌸</span>
+      <span class="amb-heart ah-5">🤍</span>
+      <span class="amb-heart ah-6">✨</span>
+      <span class="amb-heart ah-7">💗</span>
+    </div>
+
+    <!-- Screen 0: Interactive Cupid Bow & Arrow Heart Intro ("a little something, for you") -->
+    <section class="screen active screen-cupid-intro" id="screenCupid">
+      <div class="cupid-stage-container" id="cupidStage">
+        <!-- Delicate Top Heading from video -->
+        <p class="cupid-intro-title">a little something, for you</p>
+
+        <!-- Glowing 3D Glossy Pink Heart Target -->
+        <div class="cupid-heart-target" id="cupidHeartTarget" title="Pull & release the bow or tap to shoot! 🏹💖">
+          <div class="cupid-heart-halo"></div>
+          <div class="cupid-heart-mesh" id="cupidHeartMesh">
+            <svg class="heart-svg" viewBox="0 0 100 90">
+              <defs>
+                <radialGradient id="heartGradient3d" cx="35%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#ff9ebb" />
+                  <stop offset="25%" stop-color="#ff477e" />
+                  <stop offset="70%" stop-color="#db1b58" />
+                  <stop offset="100%" stop-color="#990b36" />
+                </radialGradient>
+                <filter id="heartGlowFilter" x="-40%" y="-40%" width="180%" height="180%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+              <path class="heart-base-path"
+                d="M 50,85 C 50,85 10,55 10,27 C 10,12 22,5 34,5 C 42,5 48,10 50,15 C 52,10 58,5 66,5 C 78,5 90,12 90,27 C 90,55 50,85 50,85 Z"
+                fill="url(#heartGradient3d)" filter="url(#heartGlowFilter)" />
+              <!-- Specular 3D Glossy Light Spot -->
+              <ellipse cx="32" cy="22" rx="10" ry="6" transform="rotate(-30 32 22)" fill="rgba(255, 255, 255, 0.72)" />
+            </svg>
+          </div>
+          <!-- Embedded arrow on impact -->
+          <div class="cupid-struck-arrow" id="cupidStruckArrow">
+            <svg viewBox="0 0 120 30" class="struck-arrow-svg">
+              <line x1="8" y1="15" x2="105" y2="15" stroke="#36221c" stroke-width="3.5" stroke-linecap="round" />
+              <polygon points="105,9 118,15 105,21" fill="#d93b68" stroke="#8a1133" stroke-width="1.5" />
+              <path d="M 16,8 L 8,15 L 16,22 M 24,8 L 16,15 L 24,22" stroke="#ff8da8" stroke-width="2.5"
+                stroke-linecap="round" fill="none" />
+            </svg>
+          </div>
+          <!-- Sparkle emitter on impact -->
+          <div class="heart-sparkle-burst" id="heartSparkleBurst"></div>
+        </div>
+
+        <!-- Hint text from video -->
+        <p class="cupid-pull-hint" id="cupidPullHint">PULL &amp; RELEASE</p>
+
+        <!-- Interactive Bow and Arrow Arena (at bottom left) -->
+        <div class="cupid-bow-arena" id="cupidBowArena" title="Drag bow back and release to shoot! 🏹✨">
+          <svg class="cupid-bow-svg" id="cupidBowSvg" viewBox="0 0 160 160">
+            <!-- Bow Wood Limb -->
+            <path class="bow-limb" d="M 32,22 Q 86,80 32,138" fill="none" stroke="#36221c" stroke-width="7"
+              stroke-linecap="round" />
+            <path class="bow-limb-highlight" d="M 34,25 Q 84,80 34,135" fill="none" stroke="#754e43" stroke-width="2.5"
+              stroke-linecap="round" />
+            <!-- Bow String (dynamic control point) -->
+            <path class="bow-string" id="bowString" d="M 32,22 Q 32,80 32,138" fill="none" stroke="#ede5e0"
+              stroke-width="2.5" stroke-linecap="round" />
+            <!-- Loaded Arrow inside Bow -->
+            <g class="bow-arrow-group" id="bowArrowGroup">
+              <line class="arrow-shaft" x1="12" y1="80" x2="118" y2="80" stroke="#36221c" stroke-width="4"
+                stroke-linecap="round" />
+              <polygon points="118,73 138,80 118,87" fill="#d93b68" stroke="#8a1133" stroke-width="1.5" />
+              <path d="M 20,73 L 12,80 L 20,87 M 28,73 L 20,80 L 28,87" stroke="#ff8da8" stroke-width="3"
+                stroke-linecap="round" fill="none" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- Flying arrow in transit -->
+        <div class="flying-arrow-projectile" id="flyingArrowProjectile">
+          <svg viewBox="0 0 120 30" class="flying-arrow-svg">
+            <line x1="8" y1="15" x2="105" y2="15" stroke="#36221c" stroke-width="3.5" stroke-linecap="round" />
+            <polygon points="105,9 118,15 105,21" fill="#d93b68" stroke="#8a1133" stroke-width="1.5" />
+            <path d="M 16,8 L 8,15 L 16,22 M 24,8 L 16,15 L 24,22" stroke="#ff8da8" stroke-width="2.5"
+              stroke-linecap="round" fill="none" />
+          </svg>
+        </div>
+
+        <!-- Expanding Heart Burst Rose Blanket (Slowly covers full page after arrow hits) -->
+        <div class="cupid-heart-cover-expansion" id="cupidHeartCoverExpansion"></div>
+        <!-- Cinematic Bloom / Reddish Flash overlay (matching video 1.5s bloom) -->
+        <div class="cupid-bloom-flash" id="cupidBloomFlash"></div>
+      </div>
+    </section>
+
+    <!-- Screen 1: The Intro Invitation -->
+    <section class="screen screen-grid-theme" id="screen1">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content intro-layout">
+        <div class="intro-top-row">
+          <div class="intro-headings-col">
+            <h1 class="stamped-title red-accent intro-hey">HEY!!</h1>
+            <p class="handwriting-subtitle">I made something for you</p>
+          </div>
+
+          <div class="cat-hero-wrapper cat-side-wrapper bounce-gentle">
+            <img src="assets/cat_intro_cutout.png" alt="Cute kitten" class="cat-sticker cat-intro-full"
+              id="introCatImg">
+          </div>
+        </div>
+
+        <p class="cursive-question">Do you want to see?</p>
+
+        <div class="pill-actions-group">
+          <button class="btn-pill btn-burgundy" id="btnYes1">
+            <span class="btn-underline">Yes</span>
+          </button>
+          <button class="btn-pill btn-burgundy" id="btnNo1">
+            <span class="btn-underline">No</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen Easter Egg: "HOW DARE YOU" (Clicked No) -->
+    <section class="screen screen-grid-theme" id="screenAngry">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content">
+        <div class="cat-hero-wrapper shake-angry">
+          <img src="assets/cat_angry_cutout.png" alt="Angry grumpy cat" class="cat-sticker">
+        </div>
+
+        <h1 class="stamped-title red-accent angry-title">HOW DARE YOU</h1>
+
+        <div class="pill-actions-group">
+          <button class="btn-pill btn-burgundy" id="btnGoBack">
+            <span class="btn-underline">Go back</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 2: "That's a good Gurlll 💋" -->
+    <section class="screen screen-grid-theme" id="screenGood">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content">
+        <div class="cat-hero-wrapper wobble-happy">
+          <img src="assets/cat_good_cutout.png" alt="Happy kitten with pink bow" class="cat-sticker">
+        </div>
+
+        <h2 class="script-headline-large">That's a good Gurlll <span class="kiss-emoji">💋</span></h2>
+
+        <div class="pill-actions-group">
+          <button class="btn-pill btn-burgundy" id="btnClickGood">
+            <span class="btn-underline">Click</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 3: Happy Birthday BBG (Cake Cat) -->
+    <section class="screen screen-grid-theme" id="screenBday">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content">
+        <div class="cat-hero-wrapper party-cat-wrapper float-animation">
+          <img src="assets/cat_bday_new_cutout.png" alt="Cute birthday kitten with party hat, cake, and tulip bouquet"
+            class="cat-sticker cat-bday-sticker">
+        </div>
+
+        <h1 class="stamped-title red-accent bday-title">
+          HAPPY BIRTHDAY <span class="recipient-name" id="displayRecipient">MURKH</span> <span
+            class="heart-icon">💗</span>
+        </h1>
+
+        <p class="bold-caps-sub">YOU ARE MY FAVORITE NOTIFICATION <span class="sub-heart">💗</span></p>
+        <p class="bold-caps-sub mine-text">
+          STAY CUTE, STAY HAPPY, STAY MINE <span class="knife-heart">🔪💗</span>
+        </p>
+
+        <!-- Cute 'Next' Badge Button in bottom right -->
+        <button class="badge-next-btn pulse-glow" id="btnNextBday" title="Go to next surprise">
+          <span class="badge-next-text">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen 4: Sealed Envelope with Silk Ribbon Bow & Interactive Animation -->
+    <section class="screen screen-grid-theme" id="screenEnvelope">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content flex-center envelope-screen-content" id="envelopeScreenContent">
+
+        <div class="envelope-main-stage" id="envelopeMainStage">
+
+          <!-- Cute Curious Kitten Peeking on the Left -->
+          <div class="envelope-cat-peek" id="envelopeCatPeek">
+            <img src="assets/cat_peek_cutout.png" alt="Curious kitten peeking" class="cat-peek-avatar">
+          </div>
+
+          <!-- Floating Memory Polaroids (Animated when envelope opens) -->
+          <!-- Top Left Photo: Cityscape & Pink Cap -->
+          <div class="envelope-floating-photo photo-top-left" id="envPhotoTopLeft" role="button"
+            aria-label="Memory photo top left" title="Our memory 💖">
+            <div class="photo-washi-tape"></div>
+            <div class="floating-photo-frame">
+              <img src="assets/envelope_photo_p1_tl.jpg" alt="Memory top left" id="envPhotoImgTL"
+                class="floating-photo-img">
+            </div>
+            <span class="floating-photo-pin" id="envPinTL">🌸</span>
+          </div>
+
+          <!-- Bottom Right Photo: Traditional Dress & Beautiful Smile -->
+          <div class="envelope-floating-photo photo-bottom-right" id="envPhotoBottomRight" role="button"
+            aria-label="Memory photo bottom right" title="Our memory 💖">
+            <div class="photo-washi-tape tape-right"></div>
+            <div class="floating-photo-frame">
+              <img src="assets/envelope_photo_p1_br.jpg" alt="Memory bottom right" id="envPhotoImgBR"
+                class="floating-photo-img">
+            </div>
+            <span class="floating-photo-pin" id="envPinBR">✨</span>
+          </div>
+
+          <!-- 3D Perspective Envelope Object -->
+          <div class="envelope-3d-box" id="envelope3dBox" role="button" aria-label="Interactive Birthday Envelope"
+            tabindex="0">
+
+            <!-- Envelope Back Wall & Interior Lining -->
+            <div class="envelope-back-wall">
+              <div class="envelope-interior-pattern"></div>
+            </div>
+
+            <!-- Letter Stationery Card (Slides upwards out of pocket, swipeable multi-page) -->
+            <div class="letter-stationery-card" id="letterStationeryCard">
+              <div class="stationery-bow-corner">🎀</div>
+
+              <!-- Multi-page Controls: Prev, Page Indicator, Next -->
+              <div class="letter-page-controls" id="letterPageControls">
+                <button class="letter-nav-arrow" id="prevPageBtn" title="Previous page"
+                  aria-label="Previous page">‹</button>
+                <span class="letter-page-counter" id="letterPageCounter">Page 1 of 3</span>
+                <button class="letter-nav-arrow" id="nextPageBtn" title="Next page" aria-label="Next page">›</button>
+              </div>
+
+              <!-- Text Viewport with Typewriter Animation -->
+              <div class="letter-text-viewport" id="letterTextViewport">
+                <div class="stationery-text-content" id="displayLetterText">
+                  To my favorite Idiot 🌸<br><br>
+                  Before you started talking to me, my life was as exciting as plain boiled rice without salt. Just
+                  peaceful and extremely boring and low-key cursed.<br><br>
+                  Then <span class="highlight-pink">YOU showed up</span> with your mood swings, anger issues, and
+                  non-stop Nepali chilli spice! And honestly? My life finally got interesting. Even when you're glaring
+                  at me like you want to throw a slipper, <span class="highlight-pink">you're the brightest light in my
+                    life. ✨</span><br><br>&nbsp;
+                </div>
+              </div>
+
+              <!-- Swipe / Tap Option to View Lower Messages -->
+              <button class="letter-swipe-action-btn" id="letterSwipeActionBtn"
+                title="Swipe or tap to view lower messages">
+                <span class="action-btn-arrow" id="actionBtnArrow">👇</span>
+                <span class="action-btn-label" id="actionBtnLabel">Swipe / Tap for lower message</span>
+              </button>
+
+              <!-- Pagination Footer: Dots & Swipe Hint -->
+              <div class="letter-pagination-footer" id="letterPaginationFooter">
+                <div class="letter-dots-bar" id="letterDotsBar">
+                  <span class="letter-dot active" data-page="0"></span>
+                  <span class="letter-dot" data-page="1"></span>
+                  <span class="letter-dot" data-page="2"></span>
+                </div>
+                <span class="letter-swipe-hint">👈 Swipe or tap arrows to read more 👉</span>
+              </div>
+            </div>
+
+            <!-- Envelope Top Triangular Flap (3D Flip 180deg) -->
+            <div class="envelope-top-flap" id="envelopeTopFlap">
+              <!-- Front Face (when sealed, points downwards) -->
+              <div class="flap-face flap-face-front">
+                <svg viewBox="0 0 460 160" preserveAspectRatio="none" class="flap-svg">
+                  <defs>
+                    <linearGradient id="flapFrontGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#fbc7d4" />
+                      <stop offset="100%" stop-color="#f29fb2" />
+                    </linearGradient>
+                    <filter id="flapShadow" x="-10%" y="0%" width="120%" height="140%">
+                      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="rgba(140,23,50,0.18)" />
+                    </filter>
+                  </defs>
+                  <polygon points="0,0 460,0 230,160" fill="url(#flapFrontGrad)" filter="url(#flapShadow)" />
+                </svg>
+              </div>
+              <!-- Back Face (when open, points upwards showing dark rose interior) -->
+              <div class="flap-face flap-face-back">
+                <svg viewBox="0 0 460 160" preserveAspectRatio="none" class="flap-svg flap-svg-back">
+                  <defs>
+                    <linearGradient id="flapBackGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#cf5875" />
+                      <stop offset="100%" stop-color="#e27c94" />
+                    </linearGradient>
+                  </defs>
+                  <polygon points="0,160 460,160 230,0" fill="url(#flapBackGrad)" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Envelope Front Pocket (Folds holding the card inside) -->
+            <div class="envelope-front-pocket">
+              <svg viewBox="0 0 460 280" preserveAspectRatio="none" class="pocket-svg">
+                <defs>
+                  <linearGradient id="pocketBaseGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#fcd2dd" />
+                    <stop offset="100%" stop-color="#f8a7ba" />
+                  </linearGradient>
+                  <linearGradient id="foldLeftGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f8b4c5" />
+                    <stop offset="100%" stop-color="#efa0b4" />
+                  </linearGradient>
+                  <linearGradient id="foldRightGrad" x1="1" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#f8b4c5" />
+                    <stop offset="100%" stop-color="#efa0b4" />
+                  </linearGradient>
+                  <linearGradient id="foldBottomGrad" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#e8859d" />
+                    <stop offset="100%" stop-color="#f6a9bd" />
+                  </linearGradient>
+                  <filter id="bottomFoldShadow" x="-10%" y="-10%" width="120%" height="120%">
+                    <feDropShadow dx="0" dy="-3" stdDeviation="4" flood-color="rgba(140,23,50,0.15)" />
+                  </filter>
+                </defs>
+                <!-- Base rounded pocket background -->
+                <rect width="460" height="280" rx="14" fill="url(#pocketBaseGrad)" />
+                <!-- Left fold -->
+                <polygon points="0,0 230,150 0,280" fill="url(#foldLeftGrad)" opacity="0.95" />
+                <!-- Right fold -->
+                <polygon points="460,0 230,150 460,280" fill="url(#foldRightGrad)" opacity="0.95" />
+                <!-- Bottom fold -->
+                <polygon points="0,280 230,135 460,280" fill="url(#foldBottomGrad)" filter="url(#bottomFoldShadow)" />
+              </svg>
+            </div>
+
+            <!-- Double Heart Locket with Photos (Authentic Vintage Silver / Platinum Design from Reel) -->
+            <div class="heart-locket-badge" id="heartLocket" title="Our memories 💖 Click for love">
+              <div class="locket-double-frame">
+                <!-- Left Heart (Photo 1) -->
+                <div class="locket-heart-unit heart-left">
+                  <div class="heart-photo-mask">
+                    <img src="assets/locket_photo_user_1.jpg" alt="Locket memory left" id="locketImgLeft"
+                      class="locket-photo-img">
+                    <div class="heart-glass-sheen"></div>
+                  </div>
+                  <!-- Beveled Silver Frame Overlay -->
+                  <svg class="heart-metallic-rim-svg" viewBox="0 0 100 100" aria-hidden="true">
+                    <!-- Outer 3D Bevel Rim -->
+                    <path d="M 50,26 C 50,12 22,2 8,18 C -6,36 15,68 50,96 C 85,68 106,36 92,18 C 78,2 50,12 50,26 Z"
+                      fill="none" stroke="url(#locketSilverBevel)" stroke-width="7" stroke-linejoin="round" />
+                    <!-- Inner Recessed Groove -->
+                    <path d="M 50,26 C 50,12 22,2 8,18 C -6,36 15,68 50,96 C 85,68 106,36 92,18 C 78,2 50,12 50,26 Z"
+                      fill="none" stroke="url(#locketGrooveGrad)" stroke-width="2.2" />
+                    <!-- Inner Bezel Lip -->
+                    <path d="M 50,26 C 50,12 22,2 8,18 C -6,36 15,68 50,96 C 85,68 106,36 92,18 C 78,2 50,12 50,26 Z"
+                      fill="none" stroke="#f6f6fc" stroke-width="1.2" opacity="0.9" />
+                    <!-- Top Specular Highlight Arc -->
+                    <path d="M 14,20 C 22,8 38,8 48,20" fill="none" stroke="#ffffff" stroke-width="2.4"
+                      stroke-linecap="round" opacity="0.9" />
+                  </svg>
+                </div>
+
+                <!-- Center Metal Hinge -->
+                <div class="locket-hinge">
+                  <span class="hinge-barrel top"></span>
+                  <span class="hinge-barrel mid"></span>
+                  <span class="hinge-barrel bottom"></span>
+                </div>
+
+                <!-- Right Heart (Photo 2) -->
+                <div class="locket-heart-unit heart-right">
+                  <div class="heart-photo-mask">
+                    <img src="assets/locket_photo_user_2.jpg" alt="Locket memory right" id="locketImgRight"
+                      class="locket-photo-img">
+                    <div class="heart-glass-sheen"></div>
+                  </div>
+                  <!-- Beveled Silver Frame Overlay -->
+                  <svg class="heart-metallic-rim-svg" viewBox="0 0 100 100" aria-hidden="true">
+                    <!-- Outer 3D Bevel Rim -->
+                    <path d="M 50,26 C 50,12 22,2 8,18 C -6,36 15,68 50,96 C 85,68 106,36 92,18 C 78,2 50,12 50,26 Z"
+                      fill="none" stroke="url(#locketSilverBevelRight)" stroke-width="7" stroke-linejoin="round" />
+                    <!-- Inner Recessed Groove -->
+                    <path d="M 50,26 C 50,12 22,2 8,18 C -6,36 15,68 50,96 C 85,68 106,36 92,18 C 78,2 50,12 50,26 Z"
+                      fill="none" stroke="url(#locketGrooveGrad)" stroke-width="2.2" />
+                    <!-- Inner Bezel Lip -->
+                    <path d="M 50,26 C 50,12 22,2 8,18 C -6,36 15,68 50,96 C 85,68 106,36 92,18 C 78,2 50,12 50,26 Z"
+                      fill="none" stroke="#f6f6fc" stroke-width="1.2" opacity="0.9" />
+                    <!-- Top Specular Highlight Arc -->
+                    <path d="M 52,20 C 62,8 78,8 86,20" fill="none" stroke="#ffffff" stroke-width="2.4"
+                      stroke-linecap="round" opacity="0.9" />
+                  </svg>
+                </div>
+              </div>
+              <div class="locket-sparkle-indicator">✨</div>
+            </div>
+
+            <!-- Silk Ribbon & 3D Bow (Sealed State) -->
+            <div class="envelope-ribbon-system" id="envelopeRibbon">
+              <div class="ribbon-band-horizontal">
+                <span class="ribbon-sheen"></span>
+              </div>
+              <div class="ribbon-bow-assembly">
+                <div class="bow-loop-left"></div>
+                <div class="bow-loop-right"></div>
+                <div class="bow-center-knot"></div>
+                <div class="bow-tail-left"></div>
+                <div class="bow-tail-right"></div>
+                <div class="bow-sparkle-glint">✨</div>
+              </div>
+            </div>
+
+          </div> <!-- /envelope-3d-box -->
+
+          <!-- Envelope Tap Hint -->
+          <p class="envelope-tap-hint" id="envelopeTapHint">Tap the envelope to open 💌</p>
+
+        </div> <!-- /envelope-main-stage -->
+
+        <!-- Camera 'Click here' bottom-right button -->
+        <button class="badge-icon-btn camera-btn" id="btnClickCamera" title="View memory polaroids">
+          <div class="camera-icon-badge">📷</div>
+          <span class="badge-label">Click here</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- Screen 5: Alias container -->
+    <section class="screen screen-grid-theme" id="screenLetter" style="display:none;"></section>
+
+    <!-- Screen 6: Romantic Rose Background & Clothesline Polaroids -->
+    <section class="screen screen-rose-theme" id="screenPolaroids">
+      <div class="rose-light-beams"></div>
+
+      <!-- Curved Hanging Fairy-Light String with Pinned Polaroids -->
+      <div class="curved-clothesline-stage" id="clotheslineStage">
+
+        <!-- Wall Anchors at each end where rope is tied -->
+        <div class="rope-anchor rope-anchor-left" title="Wall Anchor Left">
+          <span class="anchor-peg"></span>
+          <span class="anchor-knot">🎀</span>
+        </div>
+        <div class="rope-anchor rope-anchor-right" title="Wall Anchor Right">
+          <span class="anchor-peg"></span>
+          <span class="anchor-knot">🎀</span>
+        </div>
+
+        <!-- SVG Curved Twine/Wire with Drop Shadow & Warm Glow -->
+        <svg class="curved-string-svg" viewBox="0 0 1000 140" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <filter id="stringGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            <linearGradient id="twineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#b88373" />
+              <stop offset="25%" stop-color="#f5cebf" />
+              <stop offset="50%" stop-color="#ffe6dc" />
+              <stop offset="75%" stop-color="#f5cebf" />
+              <stop offset="100%" stop-color="#b88373" />
+            </linearGradient>
+          </defs>
+          <!-- Wire soft shadow -->
+          <path class="rope-wire-path rope-shadow" d="M 0,20 Q 250,78 500,98 Q 750,78 1000,20" fill="none"
+            stroke="rgba(0,0,0,0.3)" stroke-width="3" transform="translate(0, 4)" />
+          <!-- Warm ambient fairy glow along wire -->
+          <path class="rope-wire-path rope-glow" d="M 0,20 Q 250,78 500,98 Q 750,78 1000,20" fill="none"
+            stroke="rgba(255, 232, 175, 0.45)" stroke-width="6" filter="url(#stringGlow)" />
+          <!-- Main twisted twine wire -->
+          <path class="rope-wire-path rope-main" d="M 0,20 Q 250,78 500,98 Q 750,78 1000,20" fill="none"
+            stroke="url(#twineGrad)" stroke-width="2.8" />
+        </svg>
+
+        <!-- Glowing Fairy Light Bulbs stationed along the curve -->
+        <div class="fairy-bulbs-track" aria-hidden="true">
+          <div class="curved-fairy-bulb" style="--bx: 8%; --by: 32px;">
+            <div class="bulb-socket"></div>
+            <div class="bulb-glass"></div>
+          </div>
+          <div class="curved-fairy-bulb" style="--bx: 36%; --by: 84px;">
+            <div class="bulb-socket"></div>
+            <div class="bulb-glass"></div>
+          </div>
+          <div class="curved-fairy-bulb center-bulb" style="--bx: 50%; --by: 98px;">
+            <div class="bulb-socket"></div>
+            <div class="bulb-glass"></div>
+          </div>
+          <div class="curved-fairy-bulb" style="--bx: 64%; --by: 84px;">
+            <div class="bulb-socket"></div>
+            <div class="bulb-glass"></div>
+          </div>
+          <div class="curved-fairy-bulb" style="--bx: 92%; --by: 32px;">
+            <div class="bulb-socket"></div>
+            <div class="bulb-glass"></div>
+          </div>
+        </div>
+
+        <!-- 3 Polaroids Clamped Directly onto the Curved Wire Following Its Sag -->
+        <div class="polaroids-gallery-container">
+          <!-- Polaroid 1 (Left - attached to curve at y: 62px) -->
+          <div class="hanging-polaroid polaroid-slot-left polaroid-tilt-1" id="polaroidCard1">
+            <div class="clothespin">
+              <span class="clothespin-spring"></span>
+            </div>
+            <div class="polaroid-inner">
+              <div class="polaroid-photo-frame">
+                <img src="assets/polaroid_photo_1.jpg?v=3" alt="Memory 1" id="polaroidImg1" class="polaroid-img">
+              </div>
+              <div class="polaroid-bottom">
+                <span class="pinned-heart">❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Polaroid 2 (Center - attached to lowest curve point at y: 96px) -->
+          <div class="hanging-polaroid polaroid-slot-center polaroid-tilt-2" id="polaroidCard2">
+            <div class="clothespin">
+              <span class="clothespin-spring"></span>
+            </div>
+            <div class="polaroid-inner">
+              <div class="polaroid-photo-frame">
+                <img src="assets/polaroid_photo_2.jpg?v=3" alt="Memory 2" id="polaroidImg2" class="polaroid-img">
+              </div>
+              <div class="polaroid-bottom">
+                <span class="pinned-heart">❤️</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Polaroid 3 (Right - attached to curve at y: 62px) -->
+          <div class="hanging-polaroid polaroid-slot-right polaroid-tilt-3" id="polaroidCard3">
+            <div class="clothespin">
+              <span class="clothespin-spring"></span>
+            </div>
+            <div class="polaroid-inner">
+              <div class="polaroid-photo-frame">
+                <img src="assets/polaroid_photo_3.jpg?v=3" alt="Memory 3" id="polaroidImg3" class="polaroid-img">
+              </div>
+              <div class="polaroid-bottom">
+                <span class="pinned-heart">❤️</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Bubbly "I LOVE YOU" -->
+      <div class="rose-text-group">
+        <h1 class="bubble-love-title">
+          <span>I</span> <span class="love-heart-dot">❤️</span> <span>LIKE</span> <span>YOU A LOT</span>
+        </h1>
+        <p class="love-sub-message">You don't know how much you mean to me</p>
+      </div>
+
+      <!-- Lower Left Code Buzz Animated Birthday Cake with Blow-able Candle -->
+      <div class="interactive-cake-box" id="interactiveCake" title="Click to blow out the birthday candle!">
+        <div class="codebuzz-cake">
+          <!-- Porcelain Plate -->
+          <div class="cb-plate"></div>
+
+          <!-- Cake Sponge Layers & Cream Fillings -->
+          <div class="cb-cake-body">
+            <div class="cb-layer cb-layer-top"></div>
+            <div class="cb-cream-line cb-cream-1"></div>
+            <div class="cb-layer cb-layer-middle"></div>
+            <div class="cb-cream-line cb-cream-2"></div>
+            <div class="cb-layer cb-layer-bottom"></div>
+          </div>
+
+          <!-- Thick Dripping White Frosting -->
+          <div class="cb-icing">
+            <div class="cb-drip cb-drip-1"></div>
+            <div class="cb-drip cb-drip-2"></div>
+            <div class="cb-drip cb-drip-3"></div>
+            <div class="cb-drip cb-drip-4"></div>
+            <div class="cb-drip cb-drip-5"></div>
+          </div>
+
+          <!-- Striped Candle with Flickering Flame & Smoke Puff -->
+          <div class="cb-candle">
+            <div class="cb-wick"></div>
+            <div class="cb-flame"></div>
+            <div class="cb-smoke"></div>
+          </div>
+        </div>
+        <span class="cake-hint" id="cakeHint">Blow candle! 🎂</span>
+      </div>
+
+      <!-- Lower Right Gift Box Button -->
+      <button class="badge-icon-btn gift-btn" id="btnClickGift" title="Open surprise gift box">
+        <div class="gift-icon-badge">🎁</div>
+        <span class="badge-label">Click here</span>
+      </button>
+    </section>
+
+    <!-- Screen 7: "Here's a surprise for you!!!" 3 Mystery Gift Boxes -->
+    <section class="screen screen-grid-theme" id="screenSurprise">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content giftbox-scene">
+        <h2 class="script-headline-large surprise-title">Here's a gift for you!!!</h2>
+
+        <!-- Step Progress Indicator: Gift 1 of 3 -->
+        <div class="gift-step-indicator" id="giftStepIndicator">
+          <span class="gift-step-badge" id="giftStepBadge">Gift 1 of 3 🎁</span>
+          <div class="gift-dots" id="giftDots">
+            <span class="gift-dot active" data-step="1" title="Gift 1"></span>
+            <span class="gift-dot" data-step="2" title="Gift 2"></span>
+            <span class="gift-dot" data-step="3" title="Gift 3"></span>
+          </div>
+        </div>
+
+        <p class="surprise-instruction-subtitle" id="surpriseSubtitle">Tap the gift box to open! 🎁✨</p>
+
+        <!-- Single Gift Box Stage: Only ONE box is shown at a time -->
+        <div class="single-giftbox-stage" id="singleGiftboxStage">
+
+          <!-- Box 1 -->
+          <div class="mystery-box-card is-active-slide" id="mysteryBox1" data-box="1">
+            <div class="box-floating-anchor float-gentle">
+              <!-- Lid that pops off on open -->
+              <div class="giftbox-lid">
+                <div class="giftbox-bow">🎀</div>
+                <div class="lid-rim"></div>
+              </div>
+              <!-- Box Container Body -->
+              <div class="giftbox-body box-theme-pink">
+                <div class="box-ribbon-v"></div>
+                <div class="box-ribbon-h"></div>
+                <span class="box-number-badge">1</span>
+              </div>
+              <div class="box-shadow-ground"></div>
+
+              <!-- Surprise content popping out of Box 1 -->
+              <div class="box-surprise-content">
+                <div class="cat-sticker-frame">
+                  <img src="assets/gift_cat_1.png?v=1" alt="Angry eyebrows thumbs-up cat with hearts"
+                    class="surprise-cat-sticker">
+                </div>
+                <div class="surprise-speech-bubble">
+                  <span class="bubble-title">Gift #1 💖👍</span>
+                  <p class="bubble-text">"A SMALL EDIT FOR U"</p>
+                  <a href="assets/gift_video.mp4" download="A_Special_Edit_For_You.mp4" target="_blank"
+                    rel="noopener noreferrer" class="btn-download-video-badge" id="btnDownloadVideo1"
+                    title="Tap to download special video! 🎬💖">
+                    <span class="download-icon">📥</span>
+                    <span class="download-label">Tap to Download Video 🎬✨</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <span class="box-tap-hint">Tap to open 🎁</span>
+          </div>
+
+          <!-- Box 2 -->
+          <div class="mystery-box-card" id="mysteryBox2" data-box="2">
+            <div class="box-floating-anchor float-gentle">
+              <div class="giftbox-lid">
+                <div class="giftbox-bow">🎀</div>
+                <div class="lid-rim"></div>
+              </div>
+              <div class="giftbox-body box-theme-rose">
+                <div class="box-ribbon-v"></div>
+                <div class="box-ribbon-h"></div>
+                <span class="box-number-badge">2</span>
+              </div>
+              <div class="box-shadow-ground"></div>
+
+              <!-- Surprise content popping out of Box 2 -->
+              <div class="box-surprise-content">
+                <div class="cat-sticker-frame">
+                  <img src="assets/gift_cat_2.png?v=1" alt="Cool sunglasses cat" class="surprise-cat-sticker">
+                </div>
+                <div class="surprise-speech-bubble">
+                  <span class="bubble-title">Gift #2 😎🕶️</span>
+                  <p class="bubble-text">"You will get it on our next meet"</p>
+                </div>
+              </div>
+            </div>
+            <span class="box-tap-hint">Tap to open 🎁</span>
+          </div>
+
+          <!-- Box 3 -->
+          <div class="mystery-box-card" id="mysteryBox3" data-box="3">
+            <div class="box-floating-anchor float-gentle">
+              <div class="giftbox-lid">
+                <div class="giftbox-bow">🎀</div>
+                <div class="lid-rim"></div>
+              </div>
+              <div class="giftbox-body box-theme-purple">
+                <div class="box-ribbon-v"></div>
+                <div class="box-ribbon-h"></div>
+                <span class="box-number-badge">3</span>
+              </div>
+              <div class="box-shadow-ground"></div>
+
+              <!-- Surprise content popping out of Box 3 -->
+              <div class="box-surprise-content">
+                <div class="cat-sticker-frame">
+                  <img src="assets/gift_cat_3.png?v=1" alt="Cute blep tongue out kitten" class="surprise-cat-sticker">
+                </div>
+                <div class="surprise-speech-bubble">
+                  <span class="bubble-title">Gift #3 😝👅</span>
+                  <p class="bubble-text">"YEAH, ITS MEE"</p>
+                </div>
+              </div>
+            </div>
+            <span class="box-tap-hint">Tap to open 🎁</span>
+          </div>
+
+        </div>
+
+        <!-- Single Box Navigation Controls -->
+        <div class="surprise-action-footer">
+          <button class="btn-pill btn-outline btn-gift-nav" id="btnPrevBox" style="display: none;"
+            aria-label="Previous Gift Box">
+            <span>‹ Previous Box</span>
+          </button>
+          <button class="btn-pill btn-burgundy is-disabled btn-gift-nav" id="btnToHug" aria-disabled="true">
+            <span class="btn-underline" id="btnNextText">Open Box 1 🎁</span>
+          </button>
+        </div>
+
+        <!-- Clapping kitten in party hat in bottom right -->
+        <div class="cat-clap-container">
+          <img src="assets/cat_clap_cutout.png" alt="Cute kitten cheering" class="cat-clap-img">
+        </div>
+      </div>
+
+      <!-- Box 3 Teaser Pop-up Screen (Shows before Box 3 sticker and message) -->
+      <div class="box3-teaser-modal" id="box3TeaserModal" aria-hidden="true">
+        <div class="box3-teaser-backdrop" id="box3TeaserBackdrop"></div>
+        <div class="box3-teaser-card">
+          <div class="teaser-sparkles-top">✨💎✨</div>
+          <div class="teaser-icon-bubble">🤫🎁</div>
+          <h3 class="teaser-headline">Wait a second...</h3>
+          <p class="teaser-message">
+            "THIS GIFT IS RAREST AND MOST PRECIOUS🎁 ONE ON EARTH , AND THERE'S ONLY ONE OF ITS KIND .. I THINK YOU
+            CAUGHT THAT.. 😏💎"
+          </p>
+          <button class="btn-pill btn-burgundy teaser-reveal-btn" id="btnRevealBox3">
+            <span>Reveal Gift #3 🎁✨</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 8: Romantic Proposal Question - "Could you be with me forever?" -->
+    <section class="screen screen-grid-theme" id="screenForever">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content forever-layout">
+        <!-- Adorable White Cat Sticker with Heart Paws -->
+        <div class="forever-cat-card">
+          <div class="forever-cat-frame">
+            <img src="assets/cat_heart_forever.png" alt="Cute white cat making heart paws" class="forever-cat-img"
+              id="foreverCatImg">
+          </div>
+          <div class="cat-sparkle-badge">💖✨</div>
+        </div>
+
+        <!-- The Big Question -->
+        <h2 class="script-headline-large forever-question">Could you be with me forever?</h2>
+        <p class="forever-subtitle" id="foreverSubtitle">Please choose carefully... there's only one right answer! 🥺💖
+        </p>
+
+        <!-- Interactive Question Buttons Arena -->
+        <div class="forever-options-arena" id="foreverArena">
+          <!-- YES Option -->
+          <button class="btn-pill btn-burgundy btn-forever-yes" id="btnForeverYes">
+            <span>Yes, I can! 💖</span>
+          </button>
+
+          <!-- Runaway NO Option -->
+          <button class="btn-pill btn-outline btn-forever-no" id="btnForeverNo">
+            <span id="foreverNoText">No</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 9: Grand Finale - "Here is virtual hug for you" -->
+    <section class="screen screen-grid-theme" id="screenVirtualHug">
+      <div class="corner-wave top-left"></div>
+      <div class="corner-wave bottom-right"></div>
+
+      <div class="screen-content hug-layout">
+        <h2 class="script-headline-large hug-title">Here is virtual hug for you</h2>
+
+        <div class="hug-scene-stage">
+          <!-- Cute Animated Hugging Bears -->
+          <div class="hug-bears-wrapper" id="hugBearsWrapper" title="Click for a big warm hug! 🤗💖">
+            <picture class="hug-bears-picture">
+              <source srcset="assets/hug_bears_animated.webp" type="image/webp">
+              <img src="assets/hug_bears_animated.gif" alt="Cute animated bears hugging with love" class="hug-bears-img"
+                id="hugBearsImg">
+            </picture>
+            <div class="floating-heart-burst" id="heartBurst">💖</div>
+          </div>
+
+          <!-- Birthday Flower Bouquet -->
+          <div class="bouquet-wrapper">
+            <img src="assets/bouquet_cutout.png" alt="Fresh flower bouquet with Happy Birthday tag" class="bouquet-img">
+          </div>
+        </div>
+
+        <div class="finale-actions-row">
+          <button class="btn-pill btn-burgundy" id="btnHugAgain">
+            <span>Hug Again 🤗</span>
+          </button>
+          <button class="btn-pill btn-burgundy" id="btnReplayAll">
+            <span>Replay From Start ↺</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal: Customization Drawer / Dialog -->
+  <div class="custom-modal-overlay" id="customModal">
+    <div class="custom-modal-card">
+      <div class="modal-header">
+        <h3>✨ Personalize Your Gift</h3>
+        <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputRecipient">Recipient Name / Nickname:</label>
+          <input type="text" id="inputRecipient" value="BBG" placeholder="e.g. BBG, Maya, Honey, Bestie">
+        </div>
+
+        <div class="form-group">
+          <label for="inputLetter">Letter Message (Use <code>---</code> on a new line to add swipeable pages):</label>
+          <textarea id="inputLetter" rows="6">You are seen, you are heard, and you are loved, no matter what.
+If you ever feel unloved, remember that my love for you is boundless and endless!
+---
+Thank you for bringing so much gentle sunshine, silly giggles, and warmth into my life.
+No matter how stormy the days get, you will always be my safest home.
+---
+On your special day, I wish you endless smiles, cozy moments, and every dream you cherish.
+Happy Birthday my favorite human! Forever and always. 💗🎂✨</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Photos for Polaroids & Locket:</label>
+          <p class="form-hint">Upload photos or keep the original reel memory photos:</p>
+          <div class="photo-upload-grid">
+            <label class="photo-slot">
+              <span>Photo 1</span>
+              <input type="file" id="uploadPhoto1" accept="image/*" class="file-input">
+              <div class="slot-preview" id="previewPhoto1"></div>
+            </label>
+            <label class="photo-slot">
+              <span>Photo 2</span>
+              <input type="file" id="uploadPhoto2" accept="image/*" class="file-input">
+              <div class="slot-preview" id="previewPhoto2"></div>
+            </label>
+            <label class="photo-slot">
+              <span>Photo 3</span>
+              <input type="file" id="uploadPhoto3" accept="image/*" class="file-input">
+              <div class="slot-preview" id="previewPhoto3"></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Special Video (Gift 1 Download):</label>
+          <p class="form-hint">Upload your own special video file or keep the original:</p>
+          <div class="video-upload-slot">
+            <label class="photo-slot video-custom-label">
+              <span>Choose Video (.mp4 / .mov)</span>
+              <input type="file" id="uploadGiftVideo" accept="video/*" class="file-input">
+              <span class="custom-video-filename" id="customVideoFilename">Default Video (reel.mp4)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer-btns">
+          <button class="btn-pill btn-outline" id="btnResetDefaults">Reset to Reel Defaults</button>
+          <button class="btn-pill btn-burgundy" id="btnSaveCustom">Save & Apply 💖</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Floating Toast / Welcome Message -->
+  <div class="welcome-toast" id="welcomeToast">
+    <span>💡 Tap anywhere to enable cute music & sounds!</span>
+    <button class="toast-close" id="toastClose">Got it</button>
+  </div>
+
+  <script src="script.js?v=20261016_fullscreen_clean"></script>
+</body>
+
+</html>
