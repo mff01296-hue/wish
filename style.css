@@ -3878,7 +3878,7 @@ body {
     overflow: hidden;
   }
 
-  /* Universal Screen: Scroll-Safe on all mobile screens so nothing is ever cut off */
+  /* Universal Screen: Scroll-Safe and Full-Viewport on mobile */
   .screen {
     position: absolute;
     top: 0;
@@ -3891,69 +3891,81 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start !important;
+    justify-content: center;
   }
 
-  /* Screen Content: Centers automatically when short, expands and scrolls cleanly when tall */
+  /* Screen Content: Fills mobile screen harmoniously with balanced vertical spacing */
   .screen-content {
     min-height: 100%;
-    height: auto;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: auto 0;
-    padding: 50px 14px 24px 14px;
+    justify-content: space-evenly;
+    padding: 60px 16px 28px 16px;
     box-sizing: border-box;
     overflow: visible;
     position: relative;
     z-index: 2;
   }
 
+  /* Welcome Toast: Floats at top below header so it NEVER covers bow, next button, or cake */
+  .welcome-toast {
+    top: 56px !important;
+    bottom: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: 90vw !important;
+    font-size: 0.82rem !important;
+    padding: 8px 16px !important;
+    z-index: 250 !important;
+  }
+
   /* Decorative Corner Waves */
   .corner-wave.top-left {
-    width: 75px;
-    height: 150px;
+    width: 85px;
+    height: 170px;
     opacity: 0.85;
   }
 
   .corner-wave.bottom-right {
-    width: 80px;
-    height: 70px;
+    width: 90px;
+    height: 80px;
     opacity: 0.85;
   }
 
   /* Compact Audio Control Bar & Sound Button for Mobile Headers */
   .audio-control {
-    top: 10px;
-    left: 10px;
-    padding: 4px 10px 4px 6px;
-    gap: 6px;
+    top: 12px;
+    left: 12px;
+    padding: 5px 12px 5px 7px;
+    gap: 7px;
     border-radius: 20px;
     box-shadow: 0 4px 14px rgba(140, 23, 50, 0.16);
     z-index: 100;
   }
 
   .disc-wrapper {
-    width: 25px;
-    height: 25px;
-    font-size: 11px;
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
   }
 
   .music-label {
-    font-size: 11px;
-    max-width: 76px;
+    font-size: 11.5px;
+    max-width: 80px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .sound-effects-btn {
-    top: 10px;
-    right: 10px;
-    padding: 5px 10px;
-    font-size: 11px;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 12px;
     border-radius: 20px;
     z-index: 100;
   }
@@ -3961,8 +3973,9 @@ body {
   /* Screen 0: Interactive Cupid Bow & Arrow */
   .cupid-stage-container {
     width: 100%;
+    height: 100%;
     min-height: 100%;
-    padding: 48px 14px 20px 14px;
+    padding: 65px 16px 28px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3971,51 +3984,52 @@ body {
   }
 
   .cupid-intro-title {
-    font-size: clamp(1rem, 3.8vw, 1.25rem);
-    margin-top: 6px;
-    margin-bottom: 4px;
+    font-size: 1.35rem;
+    margin-top: 10px;
+    margin-bottom: 0;
   }
 
   .cupid-heart-target {
-    width: clamp(100px, 26vw, 125px);
-    height: clamp(90px, 24vw, 115px);
-    margin-top: 10px;
+    width: 140px;
+    height: 128px;
+    margin: auto 0;
   }
 
   .cupid-heart-halo {
-    width: clamp(190px, 50vw, 230px);
-    height: clamp(190px, 50vw, 230px);
+    width: 240px;
+    height: 240px;
   }
 
   .cupid-pull-hint {
-    font-size: 0.70rem;
-    letter-spacing: 2px;
+    font-size: 0.80rem;
+    letter-spacing: 2.5px;
     margin-top: auto;
-    margin-bottom: 22px;
+    margin-bottom: 30px;
   }
 
   .cupid-bow-arena {
-    width: clamp(90px, 24vw, 110px);
-    height: clamp(90px, 24vw, 110px);
-    bottom: 16px;
-    left: 16px;
-    transform-origin: 25px 65px;
+    width: 120px;
+    height: 120px;
+    bottom: 22px;
+    left: 20px;
+    transform-origin: 30px 75px;
   }
 
   .flying-arrow-projectile {
-    width: 90px;
-    height: 24px;
+    width: 100px;
+    height: 26px;
   }
 
   /* Screen 1: Intro Invitation */
   .intro-layout {
-    padding: 48px 14px 20px 14px;
+    padding: 65px 16px 28px 16px;
+    justify-content: space-evenly;
   }
 
   .intro-top-row {
     flex-direction: column-reverse;
-    gap: 6px;
-    margin-bottom: 8px;
+    gap: 10px;
+    margin-bottom: 0;
   }
 
   .intro-headings-col {
@@ -4024,530 +4038,581 @@ body {
   }
 
   .intro-hey {
-    font-size: clamp(2.4rem, 7.5vw, 3rem);
+    font-size: 3.6rem;
     margin-bottom: 0;
   }
 
   .handwriting-subtitle {
-    font-size: clamp(1.25rem, 4.2vw, 1.55rem);
+    font-size: 1.8rem;
   }
 
   .cat-intro-full {
-    max-width: clamp(120px, 32vw, 145px);
-    max-height: clamp(120px, 22vh, 155px);
+    max-width: 185px;
+    max-height: 195px;
   }
 
   .cursive-question {
-    font-size: clamp(1.4rem, 4.8vw, 1.75rem);
-    margin: 8px 0 14px 0;
+    font-size: 2.1rem;
+    margin: 4px 0 10px 0;
   }
 
   .pill-actions-group {
-    gap: 16px;
-    margin-top: 4px;
+    gap: 20px;
+    margin-top: 6px;
   }
 
   .pill-actions-group .btn-pill {
-    min-width: 110px;
-    padding: 9px 28px;
-    font-size: 1.15rem;
+    min-width: 125px;
+    padding: 12px 34px;
+    font-size: 1.25rem;
   }
 
   /* Screen Angry & Screen Good */
   .cat-sticker {
-    max-width: clamp(120px, 32vw, 145px);
-    max-height: clamp(120px, 22vh, 145px);
+    max-width: 175px;
+    max-height: 170px;
   }
 
   .angry-title {
-    font-size: clamp(2rem, 6.5vw, 2.5rem);
+    font-size: 2.8rem;
+    margin-top: 12px;
   }
 
   .script-headline-large {
-    font-size: clamp(1.9rem, 6vw, 2.3rem);
-    margin: 8px 0 14px 0;
+    font-size: 2.6rem;
+    margin: 12px 0 18px 0;
   }
 
   /* Screen 3: Happy Birthday */
+  #screenBday .screen-content {
+    justify-content: space-evenly;
+    padding: 65px 16px 30px 16px;
+  }
+
   .cat-bday-sticker {
-    max-width: clamp(130px, 35vw, 160px);
-    max-height: clamp(120px, 22vh, 155px);
+    max-width: 205px;
+    max-height: 200px;
   }
 
   .bday-title {
-    font-size: clamp(1.65rem, 5.5vw, 2rem);
-    letter-spacing: 1px;
+    font-size: 2.3rem;
+    letter-spacing: 1.2px;
     line-height: 1.15;
     margin-bottom: 6px;
   }
 
   .bold-caps-sub {
-    font-size: clamp(0.76rem, 2.4vw, 0.86rem);
-    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+    letter-spacing: 0.6px;
     margin-bottom: 4px;
   }
 
   .mine-text {
-    font-size: clamp(0.76rem, 2.4vw, 0.86rem);
-    margin-bottom: 12px;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
   }
 
   .badge-next-btn {
-    bottom: max(16px, env(safe-area-inset-bottom, 16px));
-    right: 16px;
-    padding: 6px 20px;
-    z-index: 50;
+    position: fixed !important;
+    bottom: max(20px, env(safe-area-inset-bottom, 20px)) !important;
+    right: 20px !important;
+    padding: 7px 24px !important;
+    z-index: 99 !important;
+    box-shadow: 0 8px 22px rgba(123, 24, 43, 0.4) !important;
   }
 
   .badge-next-text {
-    font-size: 1.55rem;
+    font-size: 1.7rem;
   }
 
   /* Screen 4: Envelope, Multi-Page Letter, Memory Photos & Heart Locket */
-  .envelope-screen-content {
-    padding-bottom: 18px;
-    justify-content: flex-end;
+  #screenEnvelope .screen-content {
+    justify-content: center;
+    padding: 65px 16px 35px 16px;
   }
 
   .envelope-main-stage {
     perspective: 1200px;
-    margin-top: auto;
-    margin-bottom: 18px;
+    margin: auto 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .envelope-3d-box {
-    width: min(300px, 84vw);
-    height: 170px;
+    width: min(330px, 88vw);
+    height: 195px;
+    position: relative;
   }
 
   .envelope-top-flap {
-    height: 100px;
+    height: 115px;
   }
 
   .ribbon-band-horizontal {
-    height: 16px;
+    height: 18px;
   }
 
   .ribbon-bow-assembly {
-    transform: translate(-50%, -50%) scale(0.82);
+    transform: translate(-50%, -50%) scale(0.9);
   }
 
-  /* Peeking Kitten inside mobile bounds */
+  /* Peeking Kitten */
   .envelope-cat-peek {
-    left: -8px;
-    top: 10%;
+    left: -20px;
+    top: 15%;
+    z-index: 3;
   }
 
   .cat-peek-avatar {
-    width: 68px;
+    width: 78px;
   }
 
-  /* Memory Photos: Fully contained within screen margins */
+  /* Memory Photos: Flank the envelope nicely without covering letter text */
+  .envelope-floating-photo {
+    z-index: 4 !important; /* Letter card stays on top at z-index: 8 */
+    filter: drop-shadow(0 6px 14px rgba(120, 20, 50, 0.25));
+  }
+
   .floating-photo-frame {
-    width: 80px;
+    width: 76px;
     padding: 3px 3px 12px 3px;
-    border-radius: 4px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
   .floating-photo-img {
-    height: 96px;
+    height: 90px;
     border-radius: 3px;
   }
 
   .photo-washi-tape {
-    width: 38px;
-    height: 13px;
+    width: 36px;
+    height: 12px;
     top: -6px;
   }
 
   .floating-photo-pin {
-    font-size: 0.95rem;
+    font-size: 0.90rem;
   }
 
   .photo-top-left {
-    top: -68px;
-    left: 0px;
+    top: -80px;
+    left: -15px;
   }
 
   .photo-bottom-right {
-    bottom: 0px;
-    right: 0px;
+    bottom: -10px;
+    right: -15px;
   }
 
   .envelope-main-stage.is-open .photo-top-left {
-    transform: translate(0, 0) scale(1) rotate(-7deg);
+    transform: translate(0, 0) scale(1) rotate(-10deg);
   }
 
   .envelope-main-stage.is-open .photo-bottom-right {
-    transform: translate(0, 0) scale(1) rotate(6deg);
+    transform: translate(0, 0) scale(1) rotate(9deg);
   }
 
   .envelope-main-stage.is-open .photo-top-left.posture-p1 {
-    transform: translate(3px, -4px) scale(1.02) rotate(4deg);
+    transform: translate(4px, -5px) scale(1.02) rotate(6deg);
   }
 
   .envelope-main-stage.is-open .photo-bottom-right.posture-p1 {
-    transform: translate(-4px, -3px) scale(1.02) rotate(-5deg);
+    transform: translate(-4px, -4px) scale(1.02) rotate(-7deg);
   }
 
   .envelope-main-stage.is-open .photo-top-left.posture-p2 {
-    transform: translate(-4px, 4px) scale(1.02) rotate(-8deg);
+    transform: translate(-4px, 5px) scale(1.02) rotate(-11deg);
   }
 
   .envelope-main-stage.is-open .photo-bottom-right.posture-p2 {
-    transform: translate(4px, 3px) scale(1.02) rotate(7deg);
+    transform: translate(5px, 4px) scale(1.02) rotate(10deg);
   }
 
   /* Heart Locket on Envelope Pocket */
   .locket-heart-unit {
-    width: 58px;
-    height: 58px;
+    width: 62px;
+    height: 62px;
   }
 
   .heart-locket-badge {
-    bottom: 34px;
+    bottom: 38px;
+    z-index: 12;
   }
 
-  /* Letter Stationery Card: Completely visible, readable & never cut off */
+  /* Letter Stationery Card: Prominent, clear, 100% visible and above photos */
   .letter-stationery-card {
-    height: 255px;
-    max-height: 48vh;
-    padding: 6px 10px 4px 10px;
+    height: 320px;
+    max-height: 52vh;
+    padding: 8px 12px 6px 12px;
     top: 6px;
-    left: 3%;
-    width: 94%;
-    border-radius: 10px;
+    left: 2.5%;
+    width: 95%;
+    border-radius: 12px;
+    z-index: 8 !important; /* Above floating photos */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
   }
 
   .envelope-main-stage.is-open .letter-stationery-card {
-    transform: translateY(-150px) scale(1);
+    transform: translateY(-205px) scale(1);
   }
 
   .envelope-main-stage.is-open.is-expanded .letter-stationery-card {
-    transform: translateY(-172px) scale(1.02);
+    transform: translateY(-230px) scale(1.02);
   }
 
   .letter-text-viewport {
-    height: 145px;
-    max-height: 145px;
-    min-height: 100px;
+    height: 195px;
+    max-height: 195px;
+    min-height: 140px;
     padding-right: 4px;
   }
 
   .stationery-text-content {
-    font-size: 0.80rem;
-    line-height: 1.4;
-    padding-bottom: 24px;
+    font-size: 0.86rem;
+    line-height: 1.46;
+    padding-bottom: 30px;
   }
 
   .letter-swipe-action-btn {
-    top: 150px;
-    right: 6px;
-    font-size: 0.70rem;
-    padding: 2px 7px;
+    top: 200px;
+    right: 8px;
+    font-size: 0.72rem;
+    padding: 3px 8px;
   }
 
   .letter-page-counter {
-    font-size: 0.70rem;
-    padding: 2px 7px;
+    font-size: 0.76rem;
+    padding: 2px 8px;
   }
 
   .letter-nav-arrow {
-    width: 22px;
-    height: 22px;
-    font-size: 1rem;
+    width: 24px;
+    height: 24px;
+    font-size: 1.05rem;
   }
 
   .stationery-bow-corner {
-    font-size: 1.45rem;
+    font-size: 1.6rem;
     top: -6px;
     left: -5px;
   }
 
   .envelope-tap-hint {
-    font-size: 1.15rem;
-    margin-top: 6px;
+    font-size: 1.25rem;
+    margin-top: 10px;
   }
 
   .camera-btn {
-    bottom: max(14px, env(safe-area-inset-bottom, 14px));
-    right: 14px;
-    padding: 5px 14px;
-    z-index: 50;
+    position: fixed !important;
+    bottom: max(20px, env(safe-area-inset-bottom, 20px)) !important;
+    right: 20px !important;
+    padding: 7px 18px !important;
+    z-index: 99 !important;
+    box-shadow: 0 6px 20px rgba(123, 24, 43, 0.35) !important;
   }
 
-  /* Screen 6: Clothesline & Hanging Polaroids */
+  /* Screen 6: Romantic Clothesline & Hanging Polaroids */
+  #screenPolaroids .screen-content {
+    justify-content: space-evenly;
+    padding: 60px 14px 28px 14px;
+  }
+
   .curved-clothesline-stage {
-    height: 220px;
+    height: 270px;
     max-width: 100%;
     width: 100%;
-    margin: 0 auto 6px auto;
+    margin: 0 auto;
   }
 
   .curved-string-svg,
   .fairy-bulbs-track {
-    height: 90px;
+    height: 110px;
   }
 
   .curved-fairy-bulb {
-    transform: translate(-50%, -35%) scale(0.80);
+    transform: translate(-50%, -35%) scale(0.90);
   }
 
-  .curved-fairy-bulb:nth-child(1) { top: 18px; }
-  .curved-fairy-bulb:nth-child(2) { top: 50px; }
-  .curved-fairy-bulb:nth-child(3) { top: 64px; }
-  .curved-fairy-bulb:nth-child(4) { top: 50px; }
-  .curved-fairy-bulb:nth-child(5) { top: 18px; }
+  .curved-fairy-bulb:nth-child(1) { top: 22px; }
+  .curved-fairy-bulb:nth-child(2) { top: 62px; }
+  .curved-fairy-bulb:nth-child(3) { top: 78px; }
+  .curved-fairy-bulb:nth-child(4) { top: 62px; }
+  .curved-fairy-bulb:nth-child(5) { top: 22px; }
 
   .polaroid-photo-frame {
-    width: clamp(76px, 21vw, 88px);
-    height: clamp(76px, 21vw, 88px);
-    border-radius: 3px;
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
   }
 
   .hanging-polaroid {
-    padding: 5px 5px 12px 5px;
-    border-radius: 4px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    padding: 6px 6px 16px 6px;
+    border-radius: 5px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
   }
 
   .polaroid-slot-left {
     left: 17%;
-    top: 42px;
+    top: 52px;
   }
 
   .polaroid-slot-center {
     left: 50%;
-    top: 66px;
+    top: 80px;
   }
 
   .polaroid-slot-right {
     left: 83%;
-    top: 42px;
+    top: 52px;
   }
 
   .clothespin {
-    top: -10px;
-    width: 9px;
-    height: 20px;
+    top: -12px;
+    width: 11px;
+    height: 23px;
   }
 
   .clothespin::before {
-    top: 7px;
-    width: 11px;
-    height: 2px;
+    top: 8px;
+    width: 13px;
+    height: 2.5px;
   }
 
   .clothespin-spring {
-    top: 4px;
-    width: 5px;
-    height: 5px;
+    top: 5px;
+    width: 6px;
+    height: 6px;
   }
 
   .pinned-heart {
-    font-size: 0.90rem;
+    font-size: 1rem;
   }
 
   .bubble-love-title {
-    font-size: clamp(1.8rem, 5.5vw, 2.15rem);
+    font-size: 2.5rem;
     letter-spacing: 2px;
-    gap: 6px;
-    margin-bottom: 2px;
+    gap: 8px;
+    margin-top: 10px;
+    margin-bottom: 4px;
   }
 
   .love-heart-dot {
-    font-size: 1.6rem;
+    font-size: 1.9rem;
   }
 
   .love-sub-message {
-    font-size: clamp(0.88rem, 2.8vw, 1rem);
+    font-size: 1.15rem;
   }
 
   .interactive-cake-box {
-    bottom: 10px;
-    left: 10px;
-    transform: scale(0.65);
+    position: fixed !important;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+    left: 16px !important;
+    transform: scale(0.75);
     transform-origin: bottom left;
+    z-index: 50;
   }
 
   /* Screen 7: Mystery Gift Boxes */
+  #screenGift .screen-content {
+    justify-content: space-evenly;
+    padding: 60px 14px 24px 14px;
+  }
+
   .surprise-title {
-    font-size: clamp(1.8rem, 5.5vw, 2.15rem);
+    font-size: 2.5rem;
     margin-bottom: 2px;
   }
 
   .surprise-instruction-subtitle {
-    font-size: 0.92rem;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
   }
 
   .single-giftbox-stage {
-    min-height: 235px;
-    margin: 4px auto 8px auto;
+    min-height: 265px;
+    margin: 20px auto 10px auto;
   }
 
   .box-floating-anchor {
-    width: 115px;
-    height: 125px;
+    width: 135px;
+    height: 145px;
   }
 
   .giftbox-body {
-    width: 102px;
-    height: 82px;
-    border-radius: 10px;
+    width: 120px;
+    height: 98px;
+    border-radius: 12px;
   }
 
   .giftbox-lid {
-    width: 112px;
-    height: 24px;
-    top: 24px;
+    width: 132px;
+    height: 28px;
+    top: 28px;
   }
 
   .lid-rim {
-    height: 19px;
+    height: 22px;
   }
 
   .giftbox-bow {
-    font-size: 1.6rem;
-    margin-top: -14px;
+    font-size: 1.9rem;
+    margin-top: -16px;
   }
 
   .cat-sticker-frame {
-    width: 102px;
-    height: 102px;
+    width: 120px;
+    height: 120px;
   }
 
   .mystery-box-card.is-open .giftbox-lid {
-    transform: translateX(-70px) translateY(36px) rotate(-35deg) scale(0.72);
+    transform: translateX(-78px) translateY(40px) rotate(-35deg) scale(0.75);
   }
 
+  /* Cat pops out into clear space, NEVER overlapping instruction text */
   .mystery-box-card.is-open .box-surprise-content {
-    transform: translateX(-50%) translateY(-86px) scale(0.95);
+    transform: translateX(-50%) translateY(-82px) scale(0.96);
   }
 
   .surprise-speech-bubble {
-    padding: 5px 12px;
-    border-radius: 10px;
+    padding: 6px 16px;
+    border-radius: 12px;
   }
 
   .bubble-title {
-    font-size: 1.15rem;
+    font-size: 1.3rem;
   }
 
   .bubble-text {
-    font-size: 0.82rem;
+    font-size: 0.90rem;
   }
 
   .btn-download-video-badge {
-    padding: 6px 14px;
-    font-size: 0.80rem;
-    margin-top: 4px;
+    padding: 8px 18px;
+    font-size: 0.88rem;
+    margin-top: 5px;
   }
 
   .cat-clap-container {
-    bottom: 12px;
-    right: 12px;
+    position: fixed !important;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+    right: 16px !important;
+    z-index: 50;
   }
 
   .cat-clap-img {
-    width: 78px;
+    width: 90px;
   }
 
   .btn-gift-nav {
-    min-width: 110px;
-    padding: 8px 16px;
-    font-size: 0.95rem;
+    min-width: 125px;
+    padding: 10px 20px;
+    font-size: 1.05rem;
   }
 
   /* Screen 8: "Could you be with me forever?" */
+  #screenForever .screen-content {
+    justify-content: space-evenly;
+    padding: 55px 16px 28px 16px;
+  }
+
   .forever-layout {
-    padding: 36px 14px 16px 14px;
+    padding: 0;
     max-width: 100%;
   }
 
   .forever-cat-frame {
-    width: clamp(125px, 34vw, 150px);
-    height: clamp(125px, 34vw, 150px);
-    border-radius: 20px;
-    border: 3.5px solid #ffffff;
+    width: 175px;
+    height: 175px;
+    border-radius: 26px;
+    border: 4px solid #ffffff;
   }
 
   .cat-sparkle-badge {
-    font-size: 1.4rem;
-    top: -5px;
-    right: -5px;
+    font-size: 1.7rem;
+    top: -7px;
+    right: -7px;
   }
 
   .forever-question {
-    font-size: clamp(1.8rem, 5.5vw, 2.2rem);
-    margin: 6px 0 4px 0;
+    font-size: 2.4rem;
+    margin: 10px 0 4px 0;
   }
 
   .forever-subtitle {
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-    margin-bottom: 14px;
+    font-size: 1rem;
+    margin-bottom: 16px;
   }
 
   .forever-options-arena {
-    min-height: 65px;
-    gap: 14px;
-    max-width: 300px;
+    min-height: 75px;
+    gap: 18px;
+    max-width: 320px;
   }
 
   .btn-forever-yes {
-    min-width: 120px;
-    padding: 10px 20px;
-    font-size: 1rem;
+    min-width: 135px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
   }
 
   .btn-forever-no {
-    min-width: 78px;
-    padding: 9px 16px;
-    font-size: 0.90rem;
+    min-width: 88px;
+    padding: 11px 18px;
+    font-size: 0.98rem;
   }
 
   /* Screen 9: Virtual Hug Grand Finale */
+  #screenVirtualHug .screen-content {
+    justify-content: space-evenly;
+    padding: 60px 16px 30px 16px;
+  }
+
   .hug-layout {
-    padding: 48px 14px 18px 14px;
+    padding: 0;
   }
 
   .hug-title {
-    font-size: clamp(2rem, 6.5vw, 2.4rem);
+    font-size: 2.8rem;
     margin-bottom: 8px;
   }
 
   .hug-scene-stage {
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 14px;
+    gap: 14px;
+    margin-bottom: 16px;
     align-items: center;
   }
 
   .hug-bears-wrapper {
-    max-width: clamp(135px, 38vw, 165px);
+    max-width: 220px;
   }
 
   .bouquet-wrapper {
-    max-width: clamp(80px, 24vw, 105px);
+    max-width: 135px;
   }
 
   .floating-heart-burst {
-    font-size: 1.8rem;
-    top: -10px;
+    font-size: 2.2rem;
+    top: -12px;
   }
 
   .finale-actions-row {
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
-    max-width: 240px;
+    max-width: 270px;
   }
 
   .finale-actions-row .btn-pill {
     width: 100%;
     min-width: unset;
-    padding: 10px 18px;
-    font-size: 1.05rem;
+    padding: 13px 26px;
+    font-size: 1.15rem;
   }
 }
 
@@ -4557,34 +4622,44 @@ body {
 
 @media (max-width: 380px) {
   .intro-hey {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
   }
 
   .cat-intro-full {
-    max-width: 125px;
+    max-width: 145px;
   }
 
   .bday-title {
-    font-size: 1.7rem;
+    font-size: 1.9rem;
   }
 
   .envelope-3d-box {
-    width: 275px;
-    height: 155px;
+    width: 295px;
+    height: 175px;
   }
 
   .floating-photo-frame {
-    width: 72px;
+    width: 68px;
     padding: 3px 3px 10px 3px;
   }
 
   .floating-photo-img {
-    height: 86px;
+    height: 82px;
+  }
+
+  .photo-top-left {
+    top: -70px;
+    left: -8px;
+  }
+
+  .photo-bottom-right {
+    bottom: -8px;
+    right: -8px;
   }
 
   .polaroid-photo-frame {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
   }
 
   .polaroid-slot-left {
@@ -4600,11 +4675,11 @@ body {
   }
 
   .bubble-love-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
   .hug-title {
-    font-size: 2.1rem;
+    font-size: 2.3rem;
   }
 }
 
