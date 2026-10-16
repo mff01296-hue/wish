@@ -1513,7 +1513,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let noTriesCount = 0;
 
-  function dodgeNoButton(e) {
+  function handleNoButtonClick(e) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -1521,86 +1521,34 @@ document.addEventListener('DOMContentLoaded', () => {
     noTriesCount++;
     playBoingSfx();
 
-    const screenContainer = screens.screenForever;
-    if (!screenContainer || !btnForeverNo) return;
+    if (!btnForeverNo) return;
 
-    // Attach to screen container so it can roam freely across the whole screen
-    if (btnForeverNo.parentElement !== screenContainer) {
-      screenContainer.appendChild(btnForeverNo);
-    }
-    btnForeverNo.classList.add('teleporting');
+    btnForeverNo.classList.remove('shake-no');
+    void btnForeverNo.offsetWidth;
+    btnForeverNo.classList.add('shake-no');
 
-    const containerW = screenContainer.clientWidth || 800;
-    const containerH = screenContainer.clientHeight || 550;
-    const btnW = btnForeverNo.offsetWidth || 95;
-    const btnH = btnForeverNo.offsetHeight || 44;
-
-    // Safe boundaries across the whole screen
-    const padX = 28;
-    const padTop = 40; // below top widgets
-    const padBottom = 28;
-
-    const minX = padX;
-    const maxX = Math.max(minX + 40, containerW - btnW - padX);
-    const minY = padTop;
-    const maxY = Math.max(minY + 40, containerH - btnH - padBottom);
-
-    const currentX = parseFloat(btnForeverNo.style.left) || (containerW / 2 + 50);
-    const currentY = parseFloat(btnForeverNo.style.top) || (containerH / 2 + 100);
-
-    // Get Yes button bounding area to prevent overlapping it
-    const yesRect = btnForeverYes ? btnForeverYes.getBoundingClientRect() : null;
-    const contRect = screenContainer.getBoundingClientRect();
-    const yesRel = yesRect ? {
-      left: yesRect.left - contRect.left - 25,
-      right: yesRect.right - contRect.left + 25,
-      top: yesRect.top - contRect.top - 25,
-      bottom: yesRect.bottom - contRect.top + 25,
-    } : { left: -999, right: -999, top: -999, bottom: -999 };
-
-    // Sample candidate spots across the whole screen and choose the one furthest from current cursor/spot
-    let bestX = minX;
-    let bestY = minY;
-    let maxDist = -1;
-
-    for (let i = 0; i < 12; i++) {
-      const candX = minX + Math.random() * (maxX - minX);
-      const candY = minY + Math.random() * (maxY - minY);
-
-      // Avoid overlapping Yes button
-      const overlapsYes = (candX >= yesRel.left && candX <= yesRel.right && candY >= yesRel.top && candY <= yesRel.bottom);
-      if (overlapsYes) continue;
-
-      const dist = Math.hypot(candX - currentX, candY - currentY);
-      if (dist > maxDist) {
-        maxDist = dist;
-        bestX = candX;
-        bestY = candY;
-      }
+    const phrases = [
+      "Oops! That button is locked... only 'Yes, I can!' works! 🥺💖",
+      "Nope! There's only one right answer here! 🥰💍",
+      "Wrong button, cutie! Tap 'Yes, I can!' 💖✨",
+      "You know in your heart you want to say Yes! 🥺💕"
+    ];
+    if (foreverSubtitle) {
+      foreverSubtitle.textContent = phrases[(noTriesCount - 1) % phrases.length];
+      foreverSubtitle.style.color = "#c41e45";
+      foreverSubtitle.style.fontWeight = "700";
     }
 
-    const randomAngle = (Math.random() - 0.5) * 18;
-
-    btnForeverNo.style.left = `${Math.round(bestX)}px`;
-    btnForeverNo.style.top = `${Math.round(bestY)}px`;
-    btnForeverNo.style.transform = `rotate(${randomAngle}deg)`;
-
-    // Keep text simply as "No"
-    if (foreverNoText) {
-      foreverNoText.textContent = 'No';
-    }
-
-    // Gentle growth on Yes button
-    const newScale = Math.min(1.0 + noTriesCount * 0.05, 1.35);
+    // Grow the Yes button slightly each time
+    const newScale = Math.min(1.0 + noTriesCount * 0.05, 1.25);
     if (btnForeverYes) {
       btnForeverYes.style.transform = `scale(${newScale})`;
     }
   }
 
   if (btnForeverNo) {
-    ['mouseenter', 'mouseover', 'touchstart', 'pointerdown', 'click'].forEach(evt => {
-      btnForeverNo.addEventListener(evt, dodgeNoButton, { passive: false });
-    });
+    btnForeverNo.addEventListener('click', handleNoButtonClick);
+    btnForeverNo.addEventListener('touchend', handleNoButtonClick);
   }
 
   if (btnForeverYes) {
@@ -1744,13 +1692,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reset Screen 8 "Could you be with me forever?" state
     noTriesCount = 0;
     if (btnForeverNo) {
-      if (foreverArena && btnForeverNo.parentElement !== foreverArena) {
-        foreverArena.appendChild(btnForeverNo);
-      }
-      btnForeverNo.classList.remove('teleporting');
-      btnForeverNo.style.position = '';
-      btnForeverNo.style.left = '';
-      btnForeverNo.style.top = '';
+      btnForeverNo.classList.remove('shake-no');
       btnForeverNo.style.transform = '';
       btnForeverNo.style.display = '';
     }
@@ -1769,18 +1711,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     renderActiveBoxSlide();
-    closeEnvelope();
+    if (typeof closeEnvelope === 'function') closeEnvelope();
+
+    // Reset Virtual Hug state
+    if (hugHoldTimer) clearTimeout(hugHoldTimer);
+    if (hugBearsImg) {
+      const pic = hugBearsWrapper ? hugBearsWrapper.querySelector('.hug-bears-picture') : null;
+      const srcEl = pic ? pic.querySelector('source') : null;
+      if (srcEl) {
+        srcEl.srcset = 'assets/hug_bears_animated.webp';
+      }
+      hugBearsImg.src = 'assets/hug_bears_animated.gif';
+    }
 
     // Reset Cupid bow & arrow intro
     isArrowShot = false;
+    currentBowAngle = -38;
+    if (cupidBowArena) cupidBowArena.style.transform = 'rotate(-38deg)';
     if (bowArrowGroup) bowArrowGroup.style.opacity = '';
     if (cupidStruckArrow) cupidStruckArrow.classList.remove('struck');
-    if (cupidHeartTarget) cupidHeartTarget.classList.remove('hit-impact');
+    if (cupidHeartTarget) {
+      cupidHeartTarget.classList.remove('hit-impact', 'target-locked');
+    }
     if (flyingArrowProjectile) {
       flyingArrowProjectile.classList.remove('is-flying');
       flyingArrowProjectile.style.opacity = '0';
     }
-    resetBowString();
+    if (typeof resetBowAim === 'function') resetBowAim();
 
     goToScreen('screenCupid');
   });
