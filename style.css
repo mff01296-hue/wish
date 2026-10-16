@@ -1495,117 +1495,7 @@ body {
   transform: translateY(0);
 }
 
-@media (max-width: 650px) {
-  .envelope-screen-content {
-    padding-bottom: 14px;
-  }
-  .envelope-main-stage {
-    margin-top: auto;
-    margin-bottom: 6px;
-  }
-  .envelope-3d-box {
-    width: 335px;
-    height: 210px;
-  }
-  .letter-stationery-card {
-    width: 94%;
-    left: 3%;
-    height: 385px;
-    padding: 10px 14px 6px 14px;
-  }
-  .envelope-main-stage.is-open .letter-stationery-card {
-    transform: translateY(-270px) scale(1);
-  }
-  .envelope-main-stage.is-open.is-expanded .letter-stationery-card {
-    transform: translateY(-310px) scale(1.02);
-  }
-  .stationery-text-content {
-    font-size: 0.81rem;
-    line-height: 1.36;
-    min-height: auto;
-    overflow: visible !important;
-    padding-bottom: 110px;
-  }
-  .letter-scroll-hint {
-    bottom: 95px;
-    font-size: 0.80rem;
-    padding: 2px 10px;
-  }
-  .envelope-cat-peek {
-    left: -35px;
-  }
-  .cat-peek-avatar {
-    width: 90px;
-  }
-  .envelope-floating-photo {
-    filter: drop-shadow(0 8px 18px rgba(120, 20, 50, 0.22));
-  }
-  .photo-top-left {
-    top: -125px;
-    left: -20px;
-    z-index: 15;
-  }
-  .photo-bottom-right {
-    bottom: -15px;
-    right: -15px;
-    z-index: 15;
-  }
-  .floating-photo-frame {
-    width: 90px;
-    padding: 4px 4px 14px 4px;
-  }
-  .floating-photo-img {
-    height: 110px;
-  }
-  .photo-washi-tape {
-    width: 38px;
-    height: 13px;
-    top: -7px;
-  }
-  /* Mobile Distinct Postures */
-  .envelope-main-stage.is-open .photo-top-left,
-  .envelope-main-stage.is-open .photo-top-left.posture-p0 {
-    transform: translate(0, 0) scale(1) rotate(-6deg);
-  }
-  .envelope-main-stage.is-open .photo-bottom-right,
-  .envelope-main-stage.is-open .photo-bottom-right.posture-p0 {
-    transform: translate(0, 0) scale(1) rotate(5deg);
-  }
-  .envelope-main-stage.is-open .photo-top-left.posture-p1 {
-    transform: translate(4px, -6px) scale(1) rotate(5deg);
-  }
-  .envelope-main-stage.is-open .photo-bottom-right.posture-p1 {
-    transform: translate(-5px, -4px) scale(1) rotate(-6deg);
-  }
-  .envelope-main-stage.is-open .photo-top-left.posture-p2 {
-    transform: translate(-4px, 5px) scale(1) rotate(-8deg);
-  }
-  .envelope-main-stage.is-open .photo-bottom-right.posture-p2 {
-    transform: translate(5px, 4px) scale(1) rotate(7.5deg);
-  }
-  .locket-heart-unit {
-    width: 62px;
-    height: 62px;
-  }
-  .heart-locket-badge {
-    left: 50%;
-    right: auto;
-    bottom: 50px;
-    transform: translateX(-50%) translateY(16px) scale(0.65);
-  }
-  .envelope-main-stage.is-open .heart-locket-badge {
-    transform: translateX(-50%) translateY(0) scale(0.92);
-  }
-  .envelope-screen-content .camera-btn {
-    bottom: 14px;
-    right: 16px;
-    padding: 5px 14px;
-  }
-  .envelope-tap-hint {
-    font-size: 1.45rem;
-    margin-top: 8px;
-  }
-}
+/* Envelope mobile layout is unified in the dedicated mobile section below */
 
 /* Camera Badge Button (Bottom Right) */
 .badge-icon-btn {
@@ -2871,15 +2761,7 @@ body {
   100% { transform: translateY(-10px) rotate(4deg) scale(1.03); }
 }
 
-@media (max-width: 800px) {
-  .cat-clap-container {
-    bottom: 20px;
-    right: 20px;
-  }
-  .cat-clap-img {
-    width: 110px;
-  }
-}
+
 
 /* ===================================================
    BOX 3 TEASER POP-UP MODAL
@@ -3139,23 +3021,7 @@ body {
   75% { transform: scale(1.05) rotate(2deg); }
 }
 
-@media (max-width: 650px) {
-  .forever-question {
-    font-size: 2.2rem;
-  }
-  .forever-cat-frame {
-    width: 165px;
-    height: 165px;
-  }
-  .btn-forever-yes {
-    font-size: 1.1rem;
-    padding: 11px 24px;
-  }
-  .btn-forever-no {
-    font-size: 1rem;
-    padding: 10px 22px;
-  }
-}
+
 
 /* ---------------------------------------------------
    SCREEN 9: VIRTUAL HUG FINALE
@@ -3705,30 +3571,7 @@ body {
   will-change: left, top, transform;
 }
 
-@media (max-width: 600px) {
-  .forever-cat-frame {
-    width: 155px;
-    height: 155px;
-    border-radius: 22px;
-  }
 
-  .forever-options-arena {
-    min-height: 95px;
-    gap: 14px;
-  }
-
-  .btn-forever-yes {
-    min-width: 135px;
-    padding: 11px 22px;
-    font-size: 1.02rem;
-  }
-
-  .btn-forever-no {
-    min-width: 110px;
-    padding: 11px 20px;
-    font-size: 0.98rem;
-  }
-}
 
 /* ===================================================
    SCREEN 0: CUPID BOW & ARROW HEART INTRO
@@ -4020,10 +3863,9 @@ body {
   body {
     height: 100vh;
     height: 100dvh;
-    max-height: 100dvh;
     width: 100vw;
     width: 100dvw;
-    overflow: hidden !important;
+    overflow: hidden;
   }
 
   .gift-viewport {
@@ -4033,34 +3875,53 @@ body {
     width: 100dvw;
     height: 100vh;
     height: 100dvh;
-    max-height: 100dvh;
-    overflow: hidden !important;
-  }
-
-  .screen {
-    width: 100%;
-    height: 100%;
-    overflow: hidden !important;
-  }
-
-  .screen-content {
-    padding: 56px 14px 18px 14px;
-    width: 100%;
-    height: 100%;
     overflow: hidden;
+  }
+
+  /* Universal Screen: Scroll-Safe on all mobile screens so nothing is ever cut off */
+  .screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start !important;
+  }
+
+  /* Screen Content: Centers automatically when short, expands and scrolls cleanly when tall */
+  .screen-content {
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto 0;
+    padding: 50px 14px 24px 14px;
+    box-sizing: border-box;
+    overflow: visible;
+    position: relative;
+    z-index: 2;
   }
 
   /* Decorative Corner Waves */
   .corner-wave.top-left {
-    width: 80px;
-    height: 160px;
-    opacity: 0.88;
+    width: 75px;
+    height: 150px;
+    opacity: 0.85;
   }
 
   .corner-wave.bottom-right {
-    width: 85px;
-    height: 75px;
-    opacity: 0.88;
+    width: 80px;
+    height: 70px;
+    opacity: 0.85;
   }
 
   /* Compact Audio Control Bar & Sound Button for Mobile Headers */
@@ -4071,6 +3932,7 @@ body {
     gap: 6px;
     border-radius: 20px;
     box-shadow: 0 4px 14px rgba(140, 23, 50, 0.16);
+    z-index: 100;
   }
 
   .disc-wrapper {
@@ -4093,44 +3955,48 @@ body {
     padding: 5px 10px;
     font-size: 11px;
     border-radius: 20px;
+    z-index: 100;
   }
 
   /* Screen 0: Interactive Cupid Bow & Arrow */
   .cupid-stage-container {
-    padding: 52px 14px 18px 14px;
+    width: 100%;
+    min-height: 100%;
+    padding: 48px 14px 20px 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
   }
 
   .cupid-intro-title {
-    font-size: 1.15rem;
+    font-size: clamp(1rem, 3.8vw, 1.25rem);
     margin-top: 6px;
     margin-bottom: 4px;
   }
 
   .cupid-heart-target {
-    width: 120px;
-    height: 110px;
-    margin-top: 8px;
+    width: clamp(100px, 26vw, 125px);
+    height: clamp(90px, 24vw, 115px);
+    margin-top: 10px;
   }
 
   .cupid-heart-halo {
-    width: 210px;
-    height: 210px;
+    width: clamp(190px, 50vw, 230px);
+    height: clamp(190px, 50vw, 230px);
   }
 
   .cupid-pull-hint {
     font-size: 0.70rem;
     letter-spacing: 2px;
     margin-top: auto;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
 
   .cupid-bow-arena {
-    width: 105px;
-    height: 105px;
+    width: clamp(90px, 24vw, 110px);
+    height: clamp(90px, 24vw, 110px);
     bottom: 16px;
     left: 16px;
     transform-origin: 25px 65px;
@@ -4143,7 +4009,7 @@ body {
 
   /* Screen 1: Intro Invitation */
   .intro-layout {
-    padding: 52px 14px 18px 14px;
+    padding: 48px 14px 20px 14px;
   }
 
   .intro-top-row {
@@ -4158,76 +4024,79 @@ body {
   }
 
   .intro-hey {
-    font-size: 3.1rem;
+    font-size: clamp(2.4rem, 7.5vw, 3rem);
     margin-bottom: 0;
   }
 
   .handwriting-subtitle {
-    font-size: 1.6rem;
+    font-size: clamp(1.25rem, 4.2vw, 1.55rem);
   }
 
   .cat-intro-full {
-    max-width: 155px;
-    max-height: 165px;
+    max-width: clamp(120px, 32vw, 145px);
+    max-height: clamp(120px, 22vh, 155px);
   }
 
   .cursive-question {
-    font-size: 1.8rem;
-    margin: 10px 0 14px 0;
+    font-size: clamp(1.4rem, 4.8vw, 1.75rem);
+    margin: 8px 0 14px 0;
   }
 
   .pill-actions-group {
     gap: 16px;
+    margin-top: 4px;
   }
 
   .pill-actions-group .btn-pill {
-    min-width: 115px;
-    padding: 10px 30px;
+    min-width: 110px;
+    padding: 9px 28px;
     font-size: 1.15rem;
   }
 
   /* Screen Angry & Screen Good */
   .cat-sticker {
-    max-width: 155px;
-    max-height: 150px;
+    max-width: clamp(120px, 32vw, 145px);
+    max-height: clamp(120px, 22vh, 145px);
   }
 
   .angry-title {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 6.5vw, 2.5rem);
   }
 
   .script-headline-large {
-    font-size: 2.3rem;
+    font-size: clamp(1.9rem, 6vw, 2.3rem);
     margin: 8px 0 14px 0;
   }
 
   /* Screen 3: Happy Birthday */
   .cat-bday-sticker {
-    max-width: 175px;
-    max-height: 165px;
+    max-width: clamp(130px, 35vw, 160px);
+    max-height: clamp(120px, 22vh, 155px);
   }
 
   .bday-title {
-    font-size: 2.05rem;
+    font-size: clamp(1.65rem, 5.5vw, 2rem);
     letter-spacing: 1px;
     line-height: 1.15;
     margin-bottom: 6px;
   }
 
   .bold-caps-sub {
-    font-size: 0.88rem;
+    font-size: clamp(0.76rem, 2.4vw, 0.86rem);
     letter-spacing: 0.5px;
     margin-bottom: 4px;
   }
 
   .mine-text {
-    font-size: 0.88rem;
+    font-size: clamp(0.76rem, 2.4vw, 0.86rem);
+    margin-bottom: 12px;
   }
 
   .badge-next-btn {
-    bottom: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
     right: 16px;
     padding: 6px 20px;
+    z-index: 50;
   }
 
   .badge-next-text {
@@ -4236,151 +4105,152 @@ body {
 
   /* Screen 4: Envelope, Multi-Page Letter, Memory Photos & Heart Locket */
   .envelope-screen-content {
-    padding-bottom: 14px;
+    padding-bottom: 18px;
     justify-content: flex-end;
   }
 
   .envelope-main-stage {
     perspective: 1200px;
-    margin-bottom: 4px;
+    margin-top: auto;
+    margin-bottom: 18px;
   }
 
   .envelope-3d-box {
-    width: min(325px, 86vw);
-    height: 195px;
+    width: min(300px, 84vw);
+    height: 170px;
   }
 
   .envelope-top-flap {
-    height: 112px;
+    height: 100px;
   }
 
   .ribbon-band-horizontal {
-    height: 18px;
+    height: 16px;
   }
 
   .ribbon-bow-assembly {
-    transform: translate(-50%, -50%) scale(0.85);
+    transform: translate(-50%, -50%) scale(0.82);
   }
 
   /* Peeking Kitten inside mobile bounds */
   .envelope-cat-peek {
-    left: -10px;
-    top: 12%;
+    left: -8px;
+    top: 10%;
   }
 
   .cat-peek-avatar {
-    width: 76px;
+    width: 68px;
   }
 
-  /* Memory Photos: Contained cleanly within mobile display boundaries */
+  /* Memory Photos: Fully contained within screen margins */
   .floating-photo-frame {
-    width: 95px;
-    padding: 4px 4px 15px 4px;
-    border-radius: 6px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    width: 80px;
+    padding: 3px 3px 12px 3px;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
   }
 
   .floating-photo-img {
-    height: 114px;
-    border-radius: 4px;
+    height: 96px;
+    border-radius: 3px;
   }
 
   .photo-washi-tape {
-    width: 44px;
-    height: 15px;
-    top: -7px;
+    width: 38px;
+    height: 13px;
+    top: -6px;
   }
 
   .floating-photo-pin {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
 
   .photo-top-left {
-    top: -95px;
-    left: -8px;
+    top: -68px;
+    left: 0px;
   }
 
   .photo-bottom-right {
-    bottom: -5px;
-    right: -8px;
+    bottom: 0px;
+    right: 0px;
   }
 
   .envelope-main-stage.is-open .photo-top-left {
-    transform: translate(0, 0) scale(1) rotate(-8deg);
+    transform: translate(0, 0) scale(1) rotate(-7deg);
   }
 
   .envelope-main-stage.is-open .photo-bottom-right {
-    transform: translate(0, 0) scale(1) rotate(7deg);
+    transform: translate(0, 0) scale(1) rotate(6deg);
   }
 
   .envelope-main-stage.is-open .photo-top-left.posture-p1 {
-    transform: translate(4px, -6px) scale(1.02) rotate(5deg);
+    transform: translate(3px, -4px) scale(1.02) rotate(4deg);
   }
 
   .envelope-main-stage.is-open .photo-bottom-right.posture-p1 {
-    transform: translate(-6px, -4px) scale(1.02) rotate(-6deg);
+    transform: translate(-4px, -3px) scale(1.02) rotate(-5deg);
   }
 
   .envelope-main-stage.is-open .photo-top-left.posture-p2 {
-    transform: translate(-5px, 5px) scale(1.02) rotate(-10deg);
+    transform: translate(-4px, 4px) scale(1.02) rotate(-8deg);
   }
 
   .envelope-main-stage.is-open .photo-bottom-right.posture-p2 {
-    transform: translate(5px, 4px) scale(1.02) rotate(9deg);
+    transform: translate(4px, 3px) scale(1.02) rotate(7deg);
   }
 
   /* Heart Locket on Envelope Pocket */
   .locket-heart-unit {
-    width: 66px;
-    height: 66px;
+    width: 58px;
+    height: 58px;
   }
 
   .heart-locket-badge {
-    bottom: 38px;
+    bottom: 34px;
   }
 
-  /* Letter Stationery Card Mobile Sliding & Proportions */
+  /* Letter Stationery Card: Completely visible, readable & never cut off */
   .letter-stationery-card {
-    height: 310px;
-    max-height: 52vh;
-    padding: 8px 12px 6px 12px;
-    top: 8px;
+    height: 255px;
+    max-height: 48vh;
+    padding: 6px 10px 4px 10px;
+    top: 6px;
     left: 3%;
     width: 94%;
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
   .envelope-main-stage.is-open .letter-stationery-card {
-    transform: translateY(-210px) scale(1);
+    transform: translateY(-150px) scale(1);
   }
 
   .envelope-main-stage.is-open.is-expanded .letter-stationery-card {
-    transform: translateY(-240px) scale(1.02);
+    transform: translateY(-172px) scale(1.02);
   }
 
   .letter-text-viewport {
-    height: 165px;
-    max-height: 165px;
-    min-height: 120px;
+    height: 145px;
+    max-height: 145px;
+    min-height: 100px;
     padding-right: 4px;
   }
 
   .stationery-text-content {
-    font-size: 0.82rem;
-    line-height: 1.44;
-    padding-bottom: 28px;
+    font-size: 0.80rem;
+    line-height: 1.4;
+    padding-bottom: 24px;
   }
 
   .letter-swipe-action-btn {
-    top: 175px;
-    right: 8px;
-    font-size: 0.72rem;
-    padding: 3px 8px;
+    top: 150px;
+    right: 6px;
+    font-size: 0.70rem;
+    padding: 2px 7px;
   }
 
   .letter-page-counter {
-    font-size: 0.72rem;
-    padding: 2px 8px;
+    font-size: 0.70rem;
+    padding: 2px 7px;
   }
 
   .letter-nav-arrow {
@@ -4390,281 +4260,294 @@ body {
   }
 
   .stationery-bow-corner {
-    font-size: 1.6rem;
+    font-size: 1.45rem;
     top: -6px;
     left: -5px;
   }
 
+  .envelope-tap-hint {
+    font-size: 1.15rem;
+    margin-top: 6px;
+  }
+
+  .camera-btn {
+    bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    right: 14px;
+    padding: 5px 14px;
+    z-index: 50;
+  }
+
   /* Screen 6: Clothesline & Hanging Polaroids */
   .curved-clothesline-stage {
-    height: 250px;
+    height: 220px;
     max-width: 100%;
     width: 100%;
-    margin: 0 auto 8px auto;
+    margin: 0 auto 6px auto;
   }
 
   .curved-string-svg,
   .fairy-bulbs-track {
-    height: 100px;
+    height: 90px;
   }
 
   .curved-fairy-bulb {
-    transform: translate(-50%, -35%) scale(0.85);
+    transform: translate(-50%, -35%) scale(0.80);
   }
 
-  .curved-fairy-bulb:nth-child(1) { top: 22px; }
-  .curved-fairy-bulb:nth-child(2) { top: 58px; }
-  .curved-fairy-bulb:nth-child(3) { top: 72px; }
-  .curved-fairy-bulb:nth-child(4) { top: 58px; }
-  .curved-fairy-bulb:nth-child(5) { top: 22px; }
+  .curved-fairy-bulb:nth-child(1) { top: 18px; }
+  .curved-fairy-bulb:nth-child(2) { top: 50px; }
+  .curved-fairy-bulb:nth-child(3) { top: 64px; }
+  .curved-fairy-bulb:nth-child(4) { top: 50px; }
+  .curved-fairy-bulb:nth-child(5) { top: 18px; }
 
   .polaroid-photo-frame {
-    width: 94px;
-    height: 94px;
+    width: clamp(76px, 21vw, 88px);
+    height: clamp(76px, 21vw, 88px);
     border-radius: 3px;
   }
 
   .hanging-polaroid {
-    padding: 6px 6px 14px 6px;
+    padding: 5px 5px 12px 5px;
     border-radius: 4px;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
   }
 
   .polaroid-slot-left {
     left: 17%;
-    top: 52px;
+    top: 42px;
   }
 
   .polaroid-slot-center {
     left: 50%;
-    top: 78px;
+    top: 66px;
   }
 
   .polaroid-slot-right {
     left: 83%;
-    top: 52px;
+    top: 42px;
   }
 
   .clothespin {
-    top: -12px;
-    width: 10px;
-    height: 22px;
+    top: -10px;
+    width: 9px;
+    height: 20px;
   }
 
   .clothespin::before {
-    top: 8px;
-    width: 12px;
+    top: 7px;
+    width: 11px;
     height: 2px;
   }
 
   .clothespin-spring {
-    top: 5px;
+    top: 4px;
     width: 5px;
     height: 5px;
   }
 
   .pinned-heart {
-    font-size: 0.95rem;
+    font-size: 0.90rem;
   }
 
   .bubble-love-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 5.5vw, 2.15rem);
     letter-spacing: 2px;
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 2px;
   }
 
   .love-heart-dot {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .love-sub-message {
-    font-size: 1.05rem;
+    font-size: clamp(0.88rem, 2.8vw, 1rem);
   }
 
   .interactive-cake-box {
-    bottom: 12px;
-    left: 14px;
-    transform: scale(0.72);
+    bottom: 10px;
+    left: 10px;
+    transform: scale(0.65);
     transform-origin: bottom left;
   }
 
   /* Screen 7: Mystery Gift Boxes */
   .surprise-title {
-    font-size: 2.3rem;
+    font-size: clamp(1.8rem, 5.5vw, 2.15rem);
     margin-bottom: 2px;
   }
 
   .surprise-instruction-subtitle {
-    font-size: 1.05rem;
+    font-size: 0.92rem;
   }
 
   .single-giftbox-stage {
-    min-height: 270px;
-    margin: 6px auto 12px auto;
+    min-height: 235px;
+    margin: 4px auto 8px auto;
   }
 
   .box-floating-anchor {
-    width: 130px;
-    height: 140px;
+    width: 115px;
+    height: 125px;
   }
 
   .giftbox-body {
-    width: 115px;
-    height: 95px;
-    border-radius: 12px;
+    width: 102px;
+    height: 82px;
+    border-radius: 10px;
   }
 
   .giftbox-lid {
-    width: 126px;
-    height: 28px;
-    top: 30px;
+    width: 112px;
+    height: 24px;
+    top: 24px;
   }
 
   .lid-rim {
-    height: 22px;
+    height: 19px;
   }
 
   .giftbox-bow {
-    font-size: 1.8rem;
-    margin-top: -16px;
+    font-size: 1.6rem;
+    margin-top: -14px;
   }
 
   .cat-sticker-frame {
-    width: 115px;
-    height: 115px;
+    width: 102px;
+    height: 102px;
   }
 
   .mystery-box-card.is-open .giftbox-lid {
-    transform: translateX(-80px) translateY(42px) rotate(-35deg) scale(0.75);
+    transform: translateX(-70px) translateY(36px) rotate(-35deg) scale(0.72);
   }
 
   .mystery-box-card.is-open .box-surprise-content {
-    transform: translateX(-50%) translateY(-100px) scale(0.98);
+    transform: translateX(-50%) translateY(-86px) scale(0.95);
   }
 
   .surprise-speech-bubble {
-    padding: 6px 14px;
-    border-radius: 12px;
+    padding: 5px 12px;
+    border-radius: 10px;
   }
 
   .bubble-title {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
 
   .bubble-text {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
   }
 
   .btn-download-video-badge {
-    padding: 7px 16px;
-    font-size: 0.84rem;
-    margin-top: 5px;
+    padding: 6px 14px;
+    font-size: 0.80rem;
+    margin-top: 4px;
   }
 
   .cat-clap-container {
-    bottom: 16px;
-    right: 16px;
+    bottom: 12px;
+    right: 12px;
   }
 
   .cat-clap-img {
-    width: 95px;
+    width: 78px;
   }
 
   .btn-gift-nav {
-    min-width: 120px;
-    padding: 9px 18px;
-    font-size: 1rem;
+    min-width: 110px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
   }
 
   /* Screen 8: "Could you be with me forever?" */
   .forever-layout {
-    padding: 40px 16px 20px 16px;
+    padding: 36px 14px 16px 14px;
     max-width: 100%;
   }
 
   .forever-cat-frame {
-    width: 160px;
-    height: 160px;
-    border-radius: 24px;
-    border: 4px solid #ffffff;
+    width: clamp(125px, 34vw, 150px);
+    height: clamp(125px, 34vw, 150px);
+    border-radius: 20px;
+    border: 3.5px solid #ffffff;
   }
 
   .cat-sparkle-badge {
-    font-size: 1.6rem;
-    top: -6px;
-    right: -6px;
+    font-size: 1.4rem;
+    top: -5px;
+    right: -5px;
   }
 
   .forever-question {
-    font-size: 2.3rem;
-    margin: 10px 0 4px 0;
+    font-size: clamp(1.8rem, 5.5vw, 2.2rem);
+    margin: 6px 0 4px 0;
   }
 
   .forever-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 18px;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    margin-bottom: 14px;
   }
 
   .forever-options-arena {
-    min-height: 70px;
-    gap: 16px;
-    max-width: 320px;
+    min-height: 65px;
+    gap: 14px;
+    max-width: 300px;
   }
 
   .btn-forever-yes {
-    min-width: 130px;
-    padding: 11px 22px;
-    font-size: 1.05rem;
+    min-width: 120px;
+    padding: 10px 20px;
+    font-size: 1rem;
   }
 
   .btn-forever-no {
-    min-width: 85px;
-    padding: 10px 18px;
-    font-size: 0.95rem;
+    min-width: 78px;
+    padding: 9px 16px;
+    font-size: 0.90rem;
   }
 
   /* Screen 9: Virtual Hug Grand Finale */
   .hug-layout {
-    padding: 55px 16px 20px 16px;
+    padding: 48px 14px 18px 14px;
   }
 
   .hug-title {
-    font-size: 2.6rem;
-    margin-bottom: 10px;
+    font-size: clamp(2rem, 6.5vw, 2.4rem);
+    margin-bottom: 8px;
   }
 
   .hug-scene-stage {
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 14px;
     align-items: center;
   }
 
   .hug-bears-wrapper {
-    max-width: 190px;
+    max-width: clamp(135px, 38vw, 165px);
   }
 
   .bouquet-wrapper {
-    max-width: 120px;
+    max-width: clamp(80px, 24vw, 105px);
   }
 
   .floating-heart-burst {
-    font-size: 2.2rem;
-    top: -14px;
+    font-size: 1.8rem;
+    top: -10px;
   }
 
   .finale-actions-row {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
-    max-width: 260px;
+    max-width: 240px;
   }
 
   .finale-actions-row .btn-pill {
     width: 100%;
     min-width: unset;
-    padding: 11px 22px;
-    font-size: 1.1rem;
+    padding: 10px 18px;
+    font-size: 1.05rem;
   }
 }
 
@@ -4674,44 +4557,34 @@ body {
 
 @media (max-width: 380px) {
   .intro-hey {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
   }
 
   .cat-intro-full {
-    max-width: 140px;
+    max-width: 125px;
   }
 
   .bday-title {
-    font-size: 1.85rem;
+    font-size: 1.7rem;
   }
 
   .envelope-3d-box {
-    width: 290px;
-    height: 180px;
+    width: 275px;
+    height: 155px;
   }
 
   .floating-photo-frame {
-    width: 86px;
-    padding: 4px 4px 12px 4px;
+    width: 72px;
+    padding: 3px 3px 10px 3px;
   }
 
   .floating-photo-img {
-    height: 102px;
-  }
-
-  .photo-top-left {
-    top: -85px;
-    left: -4px;
-  }
-
-  .photo-bottom-right {
-    bottom: -4px;
-    right: -4px;
+    height: 86px;
   }
 
   .polaroid-photo-frame {
-    width: 82px;
-    height: 82px;
+    width: 72px;
+    height: 72px;
   }
 
   .polaroid-slot-left {
@@ -4727,11 +4600,11 @@ body {
   }
 
   .bubble-love-title {
-    font-size: 1.95rem;
+    font-size: 1.8rem;
   }
 
   .hug-title {
-    font-size: 2.25rem;
+    font-size: 2.1rem;
   }
 }
 
