@@ -3000,7 +3000,10 @@ body {
 
 .btn-forever-no.teleporting {
   position: absolute !important;
-  box-shadow: 0 8px 20px rgba(123, 24, 43, 0.25);
+  z-index: 999 !important;
+  transition: left 0.22s cubic-bezier(0.18, 0.89, 0.32, 1.25), top 0.22s cubic-bezier(0.18, 0.89, 0.32, 1.25), transform 0.22s ease;
+  will-change: left, top, transform;
+  box-shadow: 0 8px 24px rgba(123, 24, 43, 0.3);
 }
 
 .forever-playful-hint {
@@ -3572,17 +3575,7 @@ body {
   transform: translateY(-2px);
 }
 
-.btn-forever-no.shake-no {
-  animation: noButtonWobble 0.4s ease-in-out;
-}
 
-@keyframes noButtonWobble {
-  0% { transform: scale(1); }
-  25% { transform: scale(0.95) rotate(-6deg); }
-  50% { transform: scale(1.05) rotate(6deg); }
-  75% { transform: scale(0.98) rotate(-3deg); }
-  100% { transform: scale(1) rotate(0deg); }
-}
 
 
 

@@ -1513,7 +1513,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let noTriesCount = 0;
 
-  function handleNoButtonClick(e) {
+  function dodgeNoButton(e) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -1521,34 +1521,86 @@ document.addEventListener('DOMContentLoaded', () => {
     noTriesCount++;
     playBoingSfx();
 
-    if (!btnForeverNo) return;
+    const screenContainer = screens.screenForever;
+    if (!screenContainer || !btnForeverNo) return;
 
-    btnForeverNo.classList.remove('shake-no');
-    void btnForeverNo.offsetWidth;
-    btnForeverNo.classList.add('shake-no');
+    // Attach to screen container so it can roam freely across the whole screen
+    if (btnForeverNo.parentElement !== screenContainer) {
+      screenContainer.appendChild(btnForeverNo);
+    }
+    btnForeverNo.classList.add('teleporting');
 
-    const phrases = [
-      "Oops! That button is locked... only 'Yes, I can!' works! 🥺💖",
-      "Nope! There's only one right answer here! 🥰💍",
-      "Wrong button, cutie! Tap 'Yes, I can!' 💖✨",
-      "You know in your heart you want to say Yes! 🥺💕"
-    ];
-    if (foreverSubtitle) {
-      foreverSubtitle.textContent = phrases[(noTriesCount - 1) % phrases.length];
-      foreverSubtitle.style.color = "#c41e45";
-      foreverSubtitle.style.fontWeight = "700";
+    const containerW = screenContainer.clientWidth || window.innerWidth;
+    const containerH = screenContainer.clientHeight || window.innerHeight;
+    const btnW = btnForeverNo.offsetWidth || 95;
+    const btnH = btnForeverNo.offsetHeight || 44;
+
+    // Safe boundaries across the whole screen
+    const padX = 24;
+    const padTop = 36;
+    const padBottom = 24;
+
+    const minX = padX;
+    const maxX = Math.max(minX + 30, containerW - btnW - padX);
+    const minY = padTop;
+    const maxY = Math.max(minY + 30, containerH - btnH - padBottom);
+
+    const currentX = parseFloat(btnForeverNo.style.left) || (containerW / 2 + 50);
+    const currentY = parseFloat(btnForeverNo.style.top) || (containerH / 2 + 100);
+
+    // Get Yes button bounding area to prevent overlapping it
+    const yesRect = btnForeverYes ? btnForeverYes.getBoundingClientRect() : null;
+    const contRect = screenContainer.getBoundingClientRect();
+    const yesRel = yesRect ? {
+      left: yesRect.left - contRect.left - 25,
+      right: yesRect.right - contRect.left + 25,
+      top: yesRect.top - contRect.top - 25,
+      bottom: yesRect.bottom - contRect.top + 25,
+    } : { left: -999, right: -999, top: -999, bottom: -999 };
+
+    // Sample candidate spots across the whole screen and choose the one furthest from current cursor/spot
+    let bestX = minX;
+    let bestY = minY;
+    let maxDist = -1;
+
+    for (let i = 0; i < 15; i++) {
+      const candX = minX + Math.random() * (maxX - minX);
+      const candY = minY + Math.random() * (maxY - minY);
+
+      // Avoid overlapping Yes button
+      const overlapsYes = (candX >= yesRel.left && candX <= yesRel.right && candY >= yesRel.top && candY <= yesRel.bottom);
+      if (overlapsYes) continue;
+
+      const dist = Math.hypot(candX - currentX, candY - currentY);
+      if (dist > maxDist) {
+        maxDist = dist;
+        bestX = candX;
+        bestY = candY;
+      }
     }
 
-    // Grow the Yes button slightly each time
-    const newScale = Math.min(1.0 + noTriesCount * 0.05, 1.25);
+    const randomAngle = (Math.random() - 0.5) * 18;
+
+    btnForeverNo.style.left = `${Math.round(bestX)}px`;
+    btnForeverNo.style.top = `${Math.round(bestY)}px`;
+    btnForeverNo.style.transform = `rotate(${randomAngle}deg)`;
+
+    // Keep text simply as "No"
+    if (foreverNoText) {
+      foreverNoText.textContent = 'No';
+    }
+
+    // Gentle growth on Yes button
+    const newScale = Math.min(1.0 + noTriesCount * 0.05, 1.35);
     if (btnForeverYes) {
       btnForeverYes.style.transform = `scale(${newScale})`;
     }
   }
 
   if (btnForeverNo) {
-    btnForeverNo.addEventListener('click', handleNoButtonClick);
-    btnForeverNo.addEventListener('touchend', handleNoButtonClick);
+    ['mouseenter', 'mouseover', 'touchstart', 'pointerdown', 'click'].forEach(evt => {
+      btnForeverNo.addEventListener(evt, dodgeNoButton, { passive: false });
+    });
   }
 
   if (btnForeverYes) {
@@ -1692,7 +1744,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reset Screen 8 "Could you be with me forever?" state
     noTriesCount = 0;
     if (btnForeverNo) {
-      btnForeverNo.classList.remove('shake-no');
+      if (foreverArena && btnForeverNo.parentElement !== foreverArena) {
+        foreverArena.appendChild(btnForeverNo);
+      }
+      btnForeverNo.classList.remove('teleporting', 'shake-no');
+      btnForeverNo.style.position = '';
+      btnForeverNo.style.left = '';
+      btnForeverNo.style.top = '';
       btnForeverNo.style.transform = '';
       btnForeverNo.style.display = '';
     }
